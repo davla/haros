@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+  haros-deps:
+    build:
+      args:
+        - ROS_VERSION
+
+      context: ./haros
+      target: deps
+
+    image: davla/thesis:haros-deps
+
+  haros:
+    build:
+      args:
+        - HAROS_HASH
+        - ROS_VERSION
+
+      context: ./haros
+      target: haros
+
+    image: "davla/thesis:haros-${HAROS_HASH}"
+
+  package:
+    build:
+      args:
+        - PACKAGE
+        - ROS_VERSION
+
+      context: ./package
+      target: package
+
+    image: "davla/thesis:${PACKAGE}-${PACKAGE_HASH}"
+
+  package-test:
+    build:
+      args:
+        - HAROS_HASH
+        - PACKAGE
+        - ROS_VERSION
+
+      context: ./package
+
+    environment:
+      - PACKAGE
+      - PACKAGE_HASH
+
+    volumes:
+      - type: bind
+        source: "${RESULTS_DIR}"
+        target: /home/ros/haros/results
+
+  dev:
+    build:
+      args:
+        ROS_VERSION: melodic
+        HAROS_HASH: a62d3b4
+        PACKAGE: mavros
+
+      context: ./package
+
+    command: ["bash"]
+    volumes:
+      - type: bind
+        source: ../..
+        target: /home/ros/haros
+
+      - type: bind
+        source: ../massive/results
+        target: /home/ros/results

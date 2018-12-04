@@ -1,0 +1,33 @@
+%YAML 1.1
+---
+
+project: massive-analysis
+rules:
+    topics:
+      description: Displays available topics
+      name: Available topics
+
+      query: >-
+        return
+          <topics/name>,
+          <nodes/publishers/topic_name>,
+          <nodes/subscribers/topic_name>
+
+      scope: configuration
+      tags:
+          - ros-comm
+          - custom-filter-tag
+
+    match_topics:
+        description: All subscribd topics must be advertised as well
+        name: Used topics must be defined
+
+        query: >-
+          for use in <nodes/subscribers/topic_name>
+          where use not in <nodes/publishers/topic_name>
+          return use
+
+        scope: configuration
+        tags:
+            - ros-comm
+            - custom-filter-tag
