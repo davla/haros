@@ -27,6 +27,9 @@ cd ../docker
     && < ./docker-password.txt docker login -u davla --passowrd-stdin \
     || docker login
 
+docker image ls | grep -P '(bonsai|haros)' | grep -v 'haros-deps' \
+    | awk '{print $2}' | xargs docker image rm
+
 docker-compose pull base || docker-compose build base
 docker-compose push base
 docker-compose pull haros-deps || docker-compose build haros-deps
