@@ -1,0 +1,39 @@
+###############################################################################
+#                                                                             #
+#                               Package build                                 #
+#                                                                             #
+###############################################################################
+
+FROM davla/thesis:base
+
+ARG PACKAGE
+ARG ROS_VERSION
+
+# Create catkin workspace
+RUN mkdir -p /home/ros/catkin_ws/src
+WORKDIR /home/ros/catkin_ws
+RUN bash -c "source /opt/ros/$ROS_VERSION/setup.bash && catkin_make"
+
+# Installing the package and its dependencies
+RUN rosinstall_generator --deps --rosdistro="$ROS_VERSION" "$PACKAGE" \
+    > pkgs.rosinstall
+RUN rosws init src pkgs.rosinstall
+
+# Installing system dependencies
+RUN bash -c "source /opt/ros/$ROS_VERSION/setup.bash \
+    && apt-get update && rosdep init; rosdep update \
+    && rosdep install --from-paths src -i --rosdistro=$ROS_VERISION -y \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*"
+
+# Building the package
+RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
+    && catkin_make_isolated --install --install-space /opt/ros/$ROS_DISTRO \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Release "
+
+# Merging compile commandds
+RUN find build_isolated -name 'compile_commands.json' \
+        -exec jq '[inputs[]]' '{}' \+ > ./compile_commands.json \
+    && mv ./compile_commands.json build_isolated
+
+# Changing ownership of catkin workspace, so that it can be used as user ros
+RUN chown -R ros:ros /home/ros/catkin_ws

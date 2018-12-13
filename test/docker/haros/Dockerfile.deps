@@ -1,0 +1,15 @@
+###############################################################################
+#                                                                             #
+#                  Haros + bonsai dependencies installation                   #
+#                                                                             #
+###############################################################################
+
+FROM davla/thesis:base
+
+# Installing system dependencies packages
+RUN apt-get update \
+    && apt-get -y install git libclang-3.8-dev python-clang-3.8
+
+# Installing haros dependencies
+RUN pip install -e \
+    git+https://github.com/timtadh/pyflwor.git#egg=pyflwor

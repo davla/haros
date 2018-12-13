@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source /home/ros/catkin_ws/devel/setup.bash
-RESULTS_DIR="$HOME/haros/results"
+source /home/ros/catkin_ws/devel_isolated/setup.bash
+RESULTS_DIR="$HOME/results"
 
 cd "$HOME/haros"
 

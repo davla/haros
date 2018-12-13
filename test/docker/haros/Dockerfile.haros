@@ -1,0 +1,19 @@
+###############################################################################
+#                                                                             #
+#                           Haros installation                                #
+#                                                                             #
+###############################################################################
+
+ARG BONSAI_HASH
+ARG HAROS_HASH
+
+FROM davla/thesis:bonsai-${BONSAI_HASH} AS haros
+
+ARG HAROS_HASH
+
+USER ros
+WORKDIR /home/ros
+
+# Cloning haros
+RUN git clone -b thesis 'https://github.com/davla/haros.git' haros \
+    && git -C haros reset --hard "$HAROS_HASH"

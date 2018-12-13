@@ -8,4 +8,4 @@ plugin_blacklist: []
 cpp:
     parser_lib: "/usr/lib/llvm-3.8/lib"
     std_includes: "/usr/lib/llvm-3.8/lib/clang/3.8.1/include"
-    compile_db: "/home/ros/catkin_ws/build"
+    compile_db: "/home/ros/catkin_ws/build_isolated"

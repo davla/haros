@@ -1,0 +1,18 @@
+###############################################################################
+#                                                                             #
+#                               Initial setup                                 #
+#                                                                             #
+###############################################################################
+
+ARG ROS_VERSION
+
+FROM ros:$ROS_VERSION-ros-base
+
+# Adding user ros, so as not to execute the container as root
+RUN useradd -m -U -s /bin/bash ros
+
+# Installing utility packages
+COPY ./artful.list /etc/apt/sources.list.d/
+RUN apt-get update && apt-get -y install jq less nano tree python-pip \
+    python3-pip
+RUN pip3 install pipenv rosinstall_generator
