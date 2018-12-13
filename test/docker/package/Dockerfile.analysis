@@ -14,7 +14,7 @@ FROM davla/thesis:${PACKAGE}-${PACKAGE_HASH} AS package
 FROM davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}
 
 ARG PACKAGE
-ARG ROS_VERSION
+ARG ROS_DISTRO
 
 # Copying the result of package build in the haros image
 COPY --from=package --chown=ros:ros /home/ros/catkin_ws /home/ros/catkin_ws
@@ -23,7 +23,7 @@ COPY --from=package --chown=root:root /opt/ros /opt/ros
 
 # Setting Haros up haros
 WORKDIR /home/ros/haros
-RUN bash -c "source /opt/ros/$ROS_VERSION/setup.bash \
+RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
     && source /home/ros/catkin_ws/devel/setup.bash \
     && python -m haros init"
 COPY --chown=ros:ros ./configs.yaml /home/ros/.haros/configs.yaml
