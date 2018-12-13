@@ -80,7 +80,7 @@ services:
       PACKAGE: mavros
       PACKAGE_HASH: 5ac2b2b
 
-    image: "davla/thesis:haros-e0ee7c7-mavros-5ac2b2b"
+    image: "davla/thesis:haros-81cbfe9-bonsai-0deff0e-mavros-5ac2b2b"
 
     volumes:
       - type: bind
