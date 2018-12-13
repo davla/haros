@@ -9,9 +9,9 @@ rules:
 
       query: >-
         return
-          <topics/name>,
-          <nodes/publishers/topic_name>,
-          <nodes/subscribers/topic_name>
+          'topicNames': <topics/name>,
+          'publishers': <nodes/publishers/topic_name>,
+          'subscribers': <nodes/subscribers/topic_name>
 
       scope: configuration
       tags:
