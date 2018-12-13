@@ -19,6 +19,37 @@ apt-get update
 apt-get install docker-ce git python python-yaml python3 python3-pip python3.6
 pip3 install rosinstall_generator pipenv
 
+#####################################################
+#
+#                   Functions
+#
+#####################################################
+
+# This function returns the initial part of the URL of a GitHub repository
+# latest release.
+#
+# Argunemts:
+#   - $1: The GitHub repository name
+function latest-release-url {
+    local RELEASES_URL="https://api.github.com/repos/$1/releases"
+    local DOWNLOAD_URL="https://github.com/$1/releases/download"
+
+    local LATEST_RELEASE
+    LATEST_RELEASE="$(wget -O - "$RELEASES_URL/latest" | jq -r '.tag_name')"
+    echo "$DOWNLOAD_URL/$LATEST_RELEASE"
+}
+
+#####################################################
+#
+#               Docker compose
+#
+#####################################################
+
+COMPOSE_TAG="$(uname -s)-$(uname -m)"
+COMPOSE_URL="$(latest-release-url 'docker/compose')/docker-compose-$COMPOSE_TAG"
+wget -O /usr/local/bin/docker-compose "$COMPOSE_URL"
+chmod +x /usr/local/bin/docker-compose
+
 # Cloning rosdistro if not there already
 runuser git submodule init
 runuser git submodule update

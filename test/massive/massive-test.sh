@@ -15,13 +15,21 @@ git submodule status | grep rosdistro | xargs \
     | xargs -i echo "Rosdistro hash: {}" >> "$RESULTS_DIR/main.log"
 
 
+export BONSAI_HASH="$(git -C /src/bonsai-code rev-parse HEAD | cut -c 1-7)"
 export HAROS_HASH="$(git rev-parse HEAD | cut -c 1-7)"
 
 cd ../docker
 
-# Check for cache
-docker-compose build haros
-# Push newly built image
+docker-compose pull base || docker-compose build base
+docker-compose push base
+docker-compose pull haros-deps || docker-compose build haros-deps
+docker-compose push haros-deps
+
+docker-compose pull bonsai || docker-compose build bonsai
+docker-compose push bonsai
+
+docker-compose pull haros || docker-compose build haros
+docker-compose push haros
 
 cd - &> /dev/null
 
@@ -38,13 +46,12 @@ pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
 
         rm -rf "$PACKAGE"
 
-        # Check for cache
-        docker-compose build package
-        # Push newly built image
+        docker-compose pull package-build || docker-compose build package-build
+        docker-compose push package-build
+        docker-compose pull analysis || docker-compose build analysis
+        docker-compose push analysis
 
-        docker-compose build package-test
-        docker-compose run package-test bash
+        docker-compose up analysis
       done
-
 
 cd - &> /dev/null
