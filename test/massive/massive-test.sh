@@ -59,6 +59,13 @@ pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
         docker-compose push analysis
 
         docker-compose up analysis
+        docker-compose down
+
+        docker image ls | grep "$PACKAGE" | awk '{print $2}' \
+            | xargs docker image rm
       done
+
+docker image ls | grep -P '(bonsai|haros)' | grep -v 'haros-deps' \
+    | awk '{print $2}' | xargs docker image rm
 
 cd - &> /dev/null
