@@ -8,7 +8,7 @@ services:
         - HAROS_HASH
         - PACKAGE
         - PACKAGE_HASH
-        - ROS_VERSION
+        - ROS_DISTRO
 
       context: ./package
       dockerfile: Dockerfile.analysis
@@ -17,7 +17,7 @@ services:
       - PACKAGE
       - PACKAGE_HASH
 
-    image: "davla/thesis:haros-${HAROS_HASH}-${PACKAGE}-${PACKAGE_HASH}"
+    image: "davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}-${PACKAGE}-${PACKAGE_HASH}"
 
     volumes:
       - type: bind
@@ -27,7 +27,7 @@ services:
   base:
     build:
       args:
-        - ROS_VERSION
+        - ROS_DISTRO
 
       context: .
       dockerfile: Dockerfile.base
@@ -67,7 +67,7 @@ services:
     build:
       args:
         - PACKAGE
-        - ROS_VERSION
+        - ROS_DISTRO
 
       context: ./package
       dockerfile: Dockerfile.build

@@ -7,22 +7,22 @@
 FROM davla/thesis:base
 
 ARG PACKAGE
-ARG ROS_VERSION
+ARG ROS_DISTRO
 
 # Create catkin workspace
 RUN mkdir -p /home/ros/catkin_ws/src
 WORKDIR /home/ros/catkin_ws
-RUN bash -c "source /opt/ros/$ROS_VERSION/setup.bash && catkin_make"
+RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && catkin_make"
 
 # Installing the package and its dependencies
-RUN rosinstall_generator --deps --rosdistro="$ROS_VERSION" "$PACKAGE" \
+RUN rosinstall_generator --deps --rosdistro="$ROS_DISTRO" "$PACKAGE" \
     > pkgs.rosinstall
 RUN rosws init src pkgs.rosinstall
 
 # Installing system dependencies
-RUN bash -c "source /opt/ros/$ROS_VERSION/setup.bash \
+RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
     && apt-get update && rosdep init; rosdep update \
-    && rosdep install --from-paths src -i --rosdistro=$ROS_VERISION -y \
+    && rosdep install --from-paths src -i --rosdistro=$ROS_DISTRO -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*"
 
 # Building the package

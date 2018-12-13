@@ -3,7 +3,7 @@
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
 NOW="$(date '+%Y-%m-%d@%H:%M')"
 export RESULTS_DIR="$BASE_DIR/results/$NOW"
-export ROS_VERSION='melodic'
+export ROS_DISTRO='melodic'
 
 # Results for this run of the analysis
 mkdir -p "$RESULTS_DIR"
@@ -34,9 +34,9 @@ docker-compose push haros
 cd - &> /dev/null
 
 pipenv install
-DISTRIBUTION_FILE="$BASE_DIR/rosdistro/$ROS_VERSION/distribution.yaml"
+DISTRIBUTION_FILE="$BASE_DIR/rosdistro/$ROS_DISTRO/distribution.yaml"
 pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
-    | grep mavros | while read PACKAGE URL; do
+    | while read PACKAGE URL; do
         cd ../docker
 
         git clone --depth 1 "$URL" "$PACKAGE"
