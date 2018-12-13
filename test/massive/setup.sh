@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 ROS_VERSION='melodic'
-BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs feadlink -f)"
+BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
+
+USER="$1"
 
 # Adding python 3.6 repository
 add-apt-repository ppa:deadsnakes/ppa
@@ -16,7 +18,8 @@ deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) sta
 apt-get update
 
 # Installing dependencies
-apt-get install docker-ce git python python-yaml python3 python3-pip python3.6
+apt-get install docker-ce git jq python python-yaml python3 python3-pip \
+    python3.6
 pip3 install rosinstall_generator pipenv
 
 #####################################################
@@ -51,8 +54,8 @@ wget -O /usr/local/bin/docker-compose "$COMPOSE_URL"
 chmod +x /usr/local/bin/docker-compose
 
 # Cloning rosdistro if not there already
-runuser git submodule init
-runuser git submodule update
+runuser -u "$USER" git submodule init
+runuser -u "$USER" git submodule update
 
 # Creating pipenv environment for massive testing
-runuser pipenv install
+runuser -u "$USER" pipenv install

@@ -14,11 +14,18 @@ git submodule status | grep rosdistro | xargs \
     | awk '{print substr($1, 1, 7)}' \
     | xargs -i echo "Rosdistro hash: {}" >> "$RESULTS_DIR/main.log"
 
-
-export BONSAI_HASH="$(git -C /src/bonsai-code rev-parse HEAD | cut -c 1-7)"
+[[ -d /src/bonsai-code ]] \
+    && BONSAI_SRC='/src/bonsai-code' \
+    || BONSAI_SRC='../../../bonsai'
+export BONSAI_HASH="$(git -C "$BONSAI_SRC" rev-parse HEAD | cut -c 1-7)"
 export HAROS_HASH="$(git rev-parse HEAD | cut -c 1-7)"
 
 cd ../docker
+
+# Logging in on docker registry
+[[ -f ./docker-password.txt ]] \
+    && < ./docker-password.txt docker login -u davla --passowrd-stdin \
+    || docker login
 
 docker-compose pull base || docker-compose build base
 docker-compose push base
