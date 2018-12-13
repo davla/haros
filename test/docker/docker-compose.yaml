@@ -1,67 +1,92 @@
 version: '3.7'
 
 services:
-  haros-deps:
+  analysis:
     build:
       args:
-        - ROS_VERSION
-
-      context: ./haros
-      target: deps
-
-    image: davla/thesis:haros-deps
-
-  haros:
-    build:
-      args:
+        - BONSAI_HASH
         - HAROS_HASH
-        - ROS_VERSION
-
-      context: ./haros
-      target: haros
-
-    image: "davla/thesis:haros-${HAROS_HASH}"
-
-  package:
-    build:
-      args:
         - PACKAGE
+        - PACKAGE_HASH
         - ROS_VERSION
 
       context: ./package
-      target: package
-
-    image: "davla/thesis:${PACKAGE}-${PACKAGE_HASH}"
-
-  package-test:
-    build:
-      args:
-        - HAROS_HASH
-        - PACKAGE
-        - ROS_VERSION
-
-      context: ./package
+      dockerfile: Dockerfile.analysis
 
     environment:
       - PACKAGE
       - PACKAGE_HASH
 
+    image: "davla/thesis:haros-${HAROS_HASH}-${PACKAGE}-${PACKAGE_HASH}"
+
     volumes:
       - type: bind
         source: "${RESULTS_DIR}"
-        target: /home/ros/haros/results
+        target: /home/ros/results
 
-  dev:
+  base:
     build:
       args:
-        ROS_VERSION: melodic
-        HAROS_HASH: a62d3b4
-        PACKAGE: mavros
+        - ROS_VERSION
+
+      context: .
+      dockerfile: Dockerfile.base
+
+    image: davla/thesis:base
+
+  bonsai:
+    build:
+      args:
+        - BONSAI_HASH
+
+      context: ./haros
+      dockerfile: Dockerfile.bonsai
+
+    image: "davla/thesis:bonsai-${BONSAI_HASH}"
+
+
+  haros:
+    build:
+      args:
+        - BONSAI_HASH
+        - HAROS_HASH
+
+      context: ./haros
+      dockerfile: Dockerfile.haros
+
+    image: "davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}"
+
+  haros-deps:
+    build:
+      context: ./haros
+      dockerfile: Dockerfile.deps
+
+    image: davla/thesis:haros-deps
+
+  package-build:
+    build:
+      args:
+        - PACKAGE
+        - ROS_VERSION
 
       context: ./package
+      dockerfile: Dockerfile.build
 
+    image: "davla/thesis:${PACKAGE}-${PACKAGE_HASH}"
+
+  dev:
     command: ["bash"]
+    environment:
+      PACKAGE: mavros
+      PACKAGE_HASH: 5ac2b2b
+
+    image: "davla/thesis:haros-e0ee7c7-mavros-5ac2b2b"
+
     volumes:
+      - type: bind
+        source: ../../../bonsai
+        target: /src/bonsai-code
+
       - type: bind
         source: ../..
         target: /home/ros/haros

@@ -1,0 +1,14 @@
+###############################################################################
+#                                                                             #
+#                           Bonsai installation                               #
+#                                                                             #
+###############################################################################
+
+FROM davla/thesis:haros-deps
+
+ARG BONSAI_HASH
+
+RUN pip install -e \
+    git+https://github.com/davla/bonsai.git@${BONSAI_HASH}#egg=bonsai-code
+
+RUN chown -R ros:ros /src
