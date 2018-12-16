@@ -7,3 +7,8 @@ haros/**/*.pyc
 build
 dist
 haros.egg-info
+
+/.idea
+/test
+*password.txt
+
