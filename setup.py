@@ -41,7 +41,8 @@ setup(
         "radon",
         "rospkg",
         "pylint",
-        "bonsai-code"
+        "bonsai-code",
+        'python-magic'
     ],
     zip_safe        = True
 )
