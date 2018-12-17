@@ -1,0 +1,3 @@
+[submodule "test/massive/rosdistro"]
+	path = test/massive/rosdistro
+	url = https://github.com/ros/rosdistro.git
