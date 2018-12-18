@@ -31,7 +31,7 @@ from urllib2 import urlopen, URLError
 import xml.etree.ElementTree as ET
 import yaml
 
-from bonsai.model import CodeGlobalScope, pretty_str
+from bonsai.model import CodeGlobalScope, CodeReference, pretty_str
 from bonsai.cpp.model import CppFunctionCall, CppDefaultArgument, CppOperator
 from bonsai.analysis import (
     CodeQuery, resolve_reference, resolve_expression, get_control_depth,
@@ -930,7 +930,7 @@ class RoscppExtractor(LoggingObject):
 class RospyExtractor(LoggingObject):
     queue_size_pos = {
         'publisher': 6,
-        'subsriber': 4,
+        'subscriber': 4,
     }
 
     @staticmethod
@@ -941,7 +941,10 @@ class RospyExtractor(LoggingObject):
                 for keyword in call.named_args
                 if keyword.name == name)
         except StopIteration:
-            return call.arguments[pos]
+            try:
+                return call.arguments[pos]
+            except IndexError:
+                return None
 
     @staticmethod
     def invalid_call(call):
@@ -973,7 +976,10 @@ class RospyExtractor(LoggingObject):
         return self.get_arg(call, pos, 'queue_size')
 
     def _extract_message_type(self, call):
-        return self.get_arg(call, 1, 'data_class')
+        msg_type = self.get_arg(call, 1, 'data_class')
+        if isinstance(msg_type, CodeReference):
+            msg_type = resolve_reference(msg_type)
+        return msg_type
 
     def _extract_topic(self, call):
         name = resolve_expression(self.get_arg(call, 0, 'name'))
@@ -1030,7 +1036,7 @@ class RospyExtractor(LoggingObject):
 
     def extract(self, node):
         self.log.debug("Parsing Python files for node %s", node.id)
-        parser = CppAstParser(workspace=self.workspace)
+        parser = PyAstParser()
         for sf in node.source_files:
             self.log.debug("Parsing C++ file %s", sf.path)
             if parser.parse(sf.path) is None:
@@ -1038,8 +1044,8 @@ class RospyExtractor(LoggingObject):
         node.source_tree = parser.global_scope
         # ----- queries after parsing, since global scope is reused -----------
         self._query_comm_primitives(node, parser.global_scope)
-        self._query_nh_param_primitives(node, parser.global_scope)
-        self._query_param_primitives(node, parser.global_scope)
+        # self._query_nh_param_primitives(node, parser.global_scope)
+        # self._query_param_primitives(node, parser.global_scope)
 
 
 class NodeExtractor(LoggingObject):
