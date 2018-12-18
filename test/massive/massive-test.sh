@@ -12,12 +12,12 @@ function latest-hash {
     local BRANCH="${2:-master}"
 
     local TMP_DIR="$(mktemp -d)"
-    git clone --depth 1 "$GIT_REPO" "$TMP_DIR"
-    git -C "$TMP_DIR" checkout "$BRANCH"
+    git clone --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
+    git -C "$TMP_DIR" checkout "$BRANCH" &> /dev/null
 
     local LATEST_HASH="$(git -C "$TMP_DIR" rev-parse HEAD | cut -c 1-7)"
 
-    rm -rf "$TMP_DIR"
+    rm -rf "$TMP_DIR" &> /dev/null
 
     echo "$LATEST_HASH"
 }
@@ -48,7 +48,7 @@ git submodule status | grep rosdistro | xargs \
     | xargs -i echo "Rosdistro hash: {}" >> "$RESULTS_DIR/main.log"
 
 [[ -d ../../../bonsai ]] \
-    && export BONSAI_HASH="$(git -C "$BONSAI_SRC" rev-parse HEAD \
+    && export BONSAI_HASH="$(git -C ../../../bonsai rev-parse HEAD \
         | cut -c 1-7)" \
     || export BONSAI_HASH="$(latest-hash 'https://github.com/davla/bonsai.git' \
         'py-parser')"
@@ -61,9 +61,6 @@ cd ../docker
     && < ./docker-password.txt docker login -u davla --passowrd-stdin \
     || docker login
 
-docker image ls | grep -P '(bonsai|haros)' | grep -v 'haros-deps' \
-    | awk '{print $2}' | xargs docker image rm
-
 build-if-not-in-hub 'base'
 build-if-not-in-hub 'haros-deps'
 
@@ -75,7 +72,7 @@ cd - &> /dev/null
 pipenv install
 DISTRIBUTION_FILE="$BASE_DIR/rosdistro/$ROS_DISTRO/distribution.yaml"
 pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
-    | grep mavros | while read PACKAGE URL; do
+    | while read PACKAGE URL; do
         cd ../docker
 
         export PACKAGE
