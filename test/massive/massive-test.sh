@@ -12,8 +12,7 @@ function latest-hash {
     local BRANCH="${2:-master}"
 
     local TMP_DIR="$(mktemp -d)"
-    git clone --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
-    git -C "$TMP_DIR" checkout "$BRANCH" &> /dev/null
+    git clone -b "$BRANCH" --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
 
     local LATEST_HASH="$(git -C "$TMP_DIR" rev-parse HEAD | cut -c 1-7)"
 
