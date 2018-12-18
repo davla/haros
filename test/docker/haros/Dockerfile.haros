@@ -17,3 +17,10 @@ WORKDIR /home/ros
 # Cloning haros
 RUN git clone -b thesis 'https://github.com/davla/haros.git' haros \
     && git -C haros reset --hard "$HAROS_HASH"
+
+# Installing dependencies
+USER root
+WORKDIR /home/ros/haros
+RUN pip install .
+
+USER ros
