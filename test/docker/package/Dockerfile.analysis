@@ -36,12 +36,13 @@ packages:\n\
 \n\
 configurations:\n\
   massive-analysis:" >> /home/ros/.haros/index.yaml
-RUN find "/home/ros/catkin_ws/src/$PACKAGE" -name '*.launch' \
-        -printf "    - %P\n" >> ./launch_files.txt \
+RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
+    && rospack find $PACKAGE | xargs -i find '{}' -name '*.launch' \
+        -printf \"    - $PACKAGE/%P\n\" >> ./launch_files.txt \
     && { test -s ./launch_files.txt \
         && cat ./launch_files.txt >> /home/ros/.haros/index.yaml \
         || echo '    []' >> /home/ros/.haros/index.yaml; } \
-    && rm ./launch_files.txt
+    && rm ./launch_files.txt"
 
 # Running the analysis
 COPY --chown=ros:ros ./analysis.sh ./analysis.sh
