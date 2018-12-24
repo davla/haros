@@ -67,7 +67,11 @@ function rm-images {
 #
 #####################################################
 
-while getopts 'h:b:' OPTION; do
+shopt -s expand_aliases
+
+alias select-packages='cat'
+
+while getopts 'h:b:R' OPTION; do
     case "$OPTION" in
         'b')
             BONSAI_HASH="$OPTARG"
@@ -75,6 +79,10 @@ while getopts 'h:b:' OPTION; do
 
         'h')
             HAROS_HASH="$OPTARG"
+            ;;
+
+        'R')
+            alias select-packages='shuf -n 20'
             ;;
 
         *)
@@ -145,7 +153,7 @@ cd - &> /dev/null || exit 1
 
 # Getting all package names and urls
 pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
-    | grep mavros | while read PACKAGE URL; do
+    | select-packages | while read PACKAGE URL; do
         cd ../docker || exit 1
 
         # Getting package hash for docker-compose
