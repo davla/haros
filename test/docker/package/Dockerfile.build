@@ -6,7 +6,7 @@
 
 FROM davla/thesis:base
 
-ARG PACKAGE
+ARG PACKAGE_NAME
 ARG ROS_DISTRO
 
 # Create catkin workspace
@@ -15,7 +15,7 @@ WORKDIR /home/ros/catkin_ws
 RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && catkin_make"
 
 # Installing the package and its dependencies
-RUN rosinstall_generator --deps --rosdistro="$ROS_DISTRO" "$PACKAGE" \
+RUN rosinstall_generator --deps --rosdistro="$ROS_DISTRO" "$PACKAGE_NAME" \
     > pkgs.rosinstall
 RUN rosws init src pkgs.rosinstall
 

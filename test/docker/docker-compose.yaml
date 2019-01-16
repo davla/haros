@@ -7,7 +7,8 @@ services:
         - BONSAI_HASH
         - HAROS_HASH
         - PACKAGE
-        - PACKAGE_HASH
+        - PACKAGE_ID
+        - PACKAGE_NAME
         - ROS_DISTRO
 
       context: ./package
@@ -17,7 +18,7 @@ services:
       - PACKAGE
       - PACKAGE_HASH
 
-    image: "davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}-${PACKAGE}-${PACKAGE_HASH}"
+    image: "davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}-${PACKAGE_ID}"
 
     volumes:
       - type: bind
@@ -66,21 +67,21 @@ services:
   package-build:
     build:
       args:
-        - PACKAGE
+        - PACKAGE_NAME
         - ROS_DISTRO
 
       context: ./package
       dockerfile: Dockerfile.build
 
-    image: "davla/thesis:${PACKAGE}-${PACKAGE_HASH}"
+    image: "davla/thesis:${PACKAGE_ID}"
 
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: mavros
-      PACKAGE_HASH: 5ac2b2b
+      PACKAGE: dataspeed_ulc_ros/dataspeed_ulc
+      PACKAGE_HASH: 'ac692e71'
 
-    image: "davla/thesis:haros-81cbfe9-bonsai-0deff0e-mavros-5ac2b2b"
+    image: "davla/thesis:dataspeed_ulc_ros--dataspeed_ulc-ac692e7"
 
     volumes:
       - type: bind

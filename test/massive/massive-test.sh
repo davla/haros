@@ -8,17 +8,16 @@
 
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
 NOW="$(date '+%Y-%m-%d@%H:%M')"
-HAROS_HASH="$(git rev-parse HEAD | cut -c 1-7)"
+HAROS_HASH="$(git rev-parse --short HEAD)"
 ROS_DISTRO='melodic'
 
 BONSAI_HOME="$BASE_DIR/../../../bonsai"
-DISTRIBUTION_FILE="$BASE_DIR/rosdistro/$ROS_DISTRO/distribution.yaml"
 RESULTS_DIR="$BASE_DIR/results/$NOW"
 
 MAIN_LOG="$RESULTS_DIR/main.log"
 
 [[ -d "$BONSAI_HOME" ]] \
-    && BONSAI_HASH="$(git -C "$BONSAI_HOME" rev-parse HEAD | cut -c 1-7)" \
+    && BONSAI_HASH="$(git -C "$BONSAI_HOME" rev-parse --short HEAD)" \
     || BONSAI_HASH="$(latest-hash 'https://github.com/davla/bonsai.git' \
         'py-parser')"
 
@@ -34,20 +33,24 @@ function build-if-not-in-hub {
 
     if [[ "$FORCE_BUILD" == 'true' ]] || ! docker-compose pull "$SERVICE"; then
         docker-compose build "$SERVICE"
-        # docker-compose push "$SERVICE"
+        docker-compose push "$SERVICE"
     fi
 }
 
 function latest-hash {
     local GIT_REPO="$1"
-    local BRANCH="${2:-master}"
+    local BRANCH="$2"
+    local TAG="${3:-HEAD}"
 
     local TMP_DIR
     TMP_DIR="$(mktemp -d)"
-    git clone -b "$BRANCH" --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
+    [[ -z "$BRANCH" ]] \
+        && git clone --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null \
+        || git clone -b "$BRANCH" --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
+    git -C "$TMP_DIR" fetch --tags &> /dev/null
 
     local LATEST_HASH
-    LATEST_HASH="$(git -C "$TMP_DIR" rev-parse HEAD | cut -c 1-7)"
+    LATEST_HASH="$(git -C "$TMP_DIR" rev-parse --short "$TAG")"
 
     rm -rf "$TMP_DIR" &> /dev/null
 
@@ -152,15 +155,18 @@ cd - &> /dev/null || exit 1
 #####################################################
 
 # Getting all package names and urls
-pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
-    | select-packages | while read PACKAGE URL; do
+pipenv run python ros-packages.py "$ROS_DISTRO" --names --urls \
+    | select-packages | while read PACKAGE URL TAG; do
         cd ../docker || exit 1
 
         # Getting package hash for docker-compose
-        PACKAGE_HASH="$(latest-hash "$URL")"
-        export PACKAGE PACKAGE_HASH
+        PACKAGE_HASH="$(latest-hash "$URL" '' "$TAG")"
+        PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
+        PACKAGE_NAME="$(basename "$PACKAGE")"
 
-        # BUilding the package and the analysis iages
+        export PACKAGE PACKAGE_NAME PACKAGE_ID
+
+        # Building the package and the analysis iages
         build-if-not-in-hub 'package-build'
         build-if-not-in-hub 'analysis'
 
@@ -169,10 +175,10 @@ pipenv run python rosdistro.py "$DISTRIBUTION_FILE" --names --urls \
         docker-compose down
 
         # Saving disk space
-        # rm-images "$PACKAGE"
+        rm-images "$PACKAGE"
       done
 
 # Saving disk space
-# rm-images '(bonsai|haros)'
+rm-images '(bonsai|haros)'
 
 cd - &> /dev/null || exit 1

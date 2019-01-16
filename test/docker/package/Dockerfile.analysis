@@ -6,14 +6,14 @@
 
 ARG BONSAI_HASH
 ARG HAROS_HASH
-ARG PACKAGE
-ARG PACKAGE_HASH
+ARG PACKAGE_ID
 
-FROM davla/thesis:${PACKAGE}-${PACKAGE_HASH} AS package
+FROM davla/thesis:${PACKAGE_ID} AS package
 
 FROM davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}
 
 ARG PACKAGE
+ARG PACKAGE_NAME
 ARG ROS_DISTRO
 
 # Copying the result of package build in the haros image
@@ -37,7 +37,7 @@ packages:\n\
 configurations:\n\
   massive-analysis:" >> /home/ros/.haros/index.yaml
 RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
-    && rospack find $PACKAGE | xargs -i find '{}' -name '*.launch' \
+    && rospack find $PACKAGE_NAME | xargs -i find '{}' -name '*.launch' \
         -printf \"    - $PACKAGE/%P\n\" >> ./launch_files.txt \
     && { test -s ./launch_files.txt \
         && cat ./launch_files.txt >> /home/ros/.haros/index.yaml \
