@@ -2,27 +2,6 @@
 
 #####################################################
 #
-#                   Variables
-#
-#####################################################
-
-BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
-NOW="$(date '+%Y-%m-%d@%H:%M')"
-HAROS_HASH="$(git rev-parse --short HEAD)"
-ROS_DISTRO='melodic'
-
-BONSAI_HOME="$BASE_DIR/../../../bonsai"
-RESULTS_DIR="$BASE_DIR/results/$NOW"
-
-MAIN_LOG="$RESULTS_DIR/main.log"
-
-[[ -d "$BONSAI_HOME" ]] \
-    && BONSAI_HASH="$(git -C "$BONSAI_HOME" rev-parse --short HEAD)" \
-    || BONSAI_HASH="$(latest-hash 'https://github.com/davla/bonsai.git' \
-        'py-parser')"
-
-#####################################################
-#
 #                   Functions
 #
 #####################################################
@@ -63,6 +42,27 @@ function rm-images {
     docker image ls | grep -P "$PATTERN" | grep -v 'haros-deps' \
         | awk '{print $1 ":" $2}' | xargs docker image rm
 }
+
+#####################################################
+#
+#                   Variables
+#
+#####################################################
+
+BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs readlink -f)"
+NOW="$(date '+%Y-%m-%d@%H:%M')"
+HAROS_HASH="$(git rev-parse --short HEAD)"
+ROS_DISTRO='melodic'
+
+BONSAI_HOME="$BASE_DIR/../../../bonsai"
+RESULTS_DIR="$BASE_DIR/results/$NOW"
+
+MAIN_LOG="$RESULTS_DIR/main.log"
+
+[[ -d "$BONSAI_HOME" ]] \
+    && BONSAI_HASH="$(git -C "$BONSAI_HOME" rev-parse --short HEAD)" \
+    || BONSAI_HASH="$(latest-hash 'https://github.com/davla/bonsai.git' \
+        'py-parser')"
 
 #####################################################
 #
