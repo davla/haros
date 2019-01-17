@@ -74,7 +74,7 @@ shopt -s expand_aliases
 
 alias select-packages='cat'
 
-while getopts 'h:b:R' OPTION; do
+while getopts 'h:b:R:' OPTION; do
     case "$OPTION" in
         'b')
             BONSAI_HASH="$OPTARG"
@@ -86,7 +86,7 @@ while getopts 'h:b:R' OPTION; do
 
         'R')
             # shellcheck disable=2139
-            alias select-packages="shuf -n $OPTARG"
+            alias select-packages="shuf -n ${OPTARG:-20}"
             ;;
 
         *)
