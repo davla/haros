@@ -85,7 +85,8 @@ while getopts 'h:b:R' OPTION; do
             ;;
 
         'R')
-            alias select-packages='shuf -n 20'
+            # shellcheck disable=2139
+            alias select-packages="shuf -n $OPTARG"
             ;;
 
         *)
