@@ -175,7 +175,7 @@ pipenv run python ros-packages.py "$ROS_DISTRO" --names --urls \
         docker-compose down
 
         # Saving disk space
-        rm-images "$PACKAGE"
+        rm-images "$PACKAGE_ID"
       done
 
 # Saving disk space
