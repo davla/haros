@@ -42,6 +42,8 @@ grep_client_api() {
     local PUBLISH="$(grep -P '\.publish' -R "$SRC_ROOT" | wc -l)"
     local SUBSCRIBE="$(grep -P '\.subscribe' -R "$SRC_ROOT" | wc -l)"
 
+    local LAUNCH="$(find "$SRC_ROOT" -name '*.launch' -type f | wc -l)"
+
     cat <<SUMMARYEOF
 {
     "NodeHandle_base": $NH,
@@ -55,6 +57,7 @@ grep_client_api() {
     "advertise": $ADVERTISE,
     "publish": $PUBLISH,
     "subscribe": $SUBSCRIBE,
+    "launch": $LAUNCH,
     "total": $(( ADVERTISE + SUBSCRIBE + PUBLISHER + SUBSCRIBER ))
 }
 SUMMARYEOF
@@ -72,8 +75,10 @@ RESULTS_DIR="results/filter"
 mkdir -p "$RESULTS_DIR"
 
 while read PACKAGE URL TAG; do
+    echo "Cloning $PACKAGE"
     read PACKAGE_ROOT HASH < <(get_package "$URL" "$TAG")
 
+    echo "Analyzing $PACKAGE"
     cat > transform-filter.jq <<FILTEREOF
 {
     "package": {
@@ -84,7 +89,6 @@ while read PACKAGE URL TAG; do
     }
 } * .
 FILTEREOF
-
     grep_client_api "$PACKAGE_ROOT" "$PACKAGE" \
         | jq -f transform-filter.jq > "$RESULTS_DIR/${PACKAGE//\//--}.json"
 
