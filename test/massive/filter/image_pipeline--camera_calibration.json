@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "image_pipeline/camera_calibration",
+    "url": "https://github.com/ros-gbp/image_pipeline-release.git",
+    "tag": "release/melodic/depth_image_proc/1.12.23-0",
+    "hash": "0027adc"
+  },
+  "NodeHandle_base": 42,
+  "NodeHandle_with_arguments": 4,
+  "Publisher_bare": 0,
+  "Publication": 8,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 38,
+  "Publisher": 9,
+  "advertise": 7,
+  "publish": 9,
+  "subscribe": 14,
+  "launch": 0,
+  "total": 68
+}

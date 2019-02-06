@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "velodyne_simulator/velodyne_simulator",
+    "url": "https://github.com/ros-drivers/video_stream_opencv-release.git",
+    "tag": "release/melodic/video_stream_opencv/1.1.5-0",
+    "hash": "95ec59d"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 1,
+  "advertise": 1,
+  "publish": 1,
+  "subscribe": 0,
+  "launch": 6,
+  "total": 3
+}

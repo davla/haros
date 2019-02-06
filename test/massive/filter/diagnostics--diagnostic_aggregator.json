@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "diagnostics/diagnostic_aggregator",
+    "url": "https://github.com/ros-gbp/diagnostics-release.git",
+    "tag": "release/melodic/diagnostic_analysis/1.9.3-0",
+    "hash": "befb03b"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "flir_boson_usb",
+    "url": "https://github.com/boschresearch/fmi_adapter-release.git",
+    "tag": "release/melodic/fmi_adapter/1.0.2-0",
+    "hash": "28c923b"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 1,
+  "advertise": 1,
+  "publish": 1,
+  "subscribe": 2,
+  "launch": 1,
+  "total": 7
+}

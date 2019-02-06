@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "exotica/exotica_core",
+    "url": "https://github.com/ipab-slmc/exotica-release.git",
+    "tag": "release/melodic/exotica_core_task_maps/5.0.0-0",
+    "hash": "b3d32d2"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 9,
+  "advertise": 0,
+  "publish": 17,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 9
+}

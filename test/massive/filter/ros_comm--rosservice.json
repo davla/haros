@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_comm/rosservice",
+    "url": "https://github.com/ros-gbp/ros_comm-release.git",
+    "tag": "release/melodic/rostest/1.14.3-0",
+    "hash": "bd0cf51"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 1,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 3
+}

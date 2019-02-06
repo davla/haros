@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_comm/rosparam",
+    "url": "https://github.com/ros-gbp/ros_comm-release.git",
+    "tag": "release/melodic/rospy/1.14.3-0",
+    "hash": "7b09f9c"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 2,
+  "TopicManager": 7,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 53,
+  "Publisher": 51,
+  "advertise": 0,
+  "publish": 16,
+  "subscribe": 13,
+  "launch": 0,
+  "total": 117
+}

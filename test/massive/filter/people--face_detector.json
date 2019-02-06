@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "people/face_detector",
+    "url": "https://github.com/OSUrobotics/people-release.git",
+    "tag": "release/melodic/leg_detector/1.1.2-0",
+    "hash": "7c6fb4a"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 8,
+  "subscribe": 0,
+  "launch": 3,
+  "total": 8
+}

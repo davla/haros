@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "nanomsg",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/amcl/1.16.2-0",
+    "hash": "66ae487"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 6,
+  "Publisher": 5,
+  "advertise": 7,
+  "publish": 6,
+  "subscribe": 3,
+  "launch": 2,
+  "total": 21
+}

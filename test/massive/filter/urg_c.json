@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "urg_c",
+    "url": "https://github.com/ros-gbp/urg_node-release.git",
+    "tag": "release/melodic/urg_node/0.1.11-0",
+    "hash": "dd878e4"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 4,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 6
+}

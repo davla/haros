@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "navigation/nav_core",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/navfn/1.16.2-0",
+    "hash": "cb143a4"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 2,
+  "advertise": 4,
+  "publish": 2,
+  "subscribe": 1,
+  "launch": 0,
+  "total": 8
+}

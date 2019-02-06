@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "marti_common/swri_prefix_tools",
+    "url": "https://github.com/swri-robotics-gbp/marti_common-release.git",
+    "tag": "release/melodic/swri_roscpp/2.7.2-0",
+    "hash": "0acdf64"
+  },
+  "NodeHandle_base": 56,
+  "NodeHandle_with_arguments": 4,
+  "Publisher_bare": 1,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 176,
+  "Publisher": 21,
+  "advertise": 4,
+  "publish": 2,
+  "subscribe": 5,
+  "launch": 1,
+  "total": 206
+}

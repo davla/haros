@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "vrpn_client_ros",
+    "url": "https://github.com/ros-gbp/warehouse_ros-release.git",
+    "tag": "release/melodic/warehouse_ros/0.9.2-0",
+    "hash": "ee9ec87"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

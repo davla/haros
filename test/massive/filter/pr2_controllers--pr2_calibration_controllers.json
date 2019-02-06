@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "pr2_controllers/pr2_calibration_controllers",
+    "url": "https://github.com/pr2-gbp/pr2_controllers-release.git",
+    "tag": "release/melodic/pr2_controllers/1.10.15-1",
+    "hash": "b5afcb7"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

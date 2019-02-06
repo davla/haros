@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "multimaster_fkie/master_discovery_fkie",
+    "url": "https://github.com/fkie-release/multimaster_fkie-release.git",
+    "tag": "release/melodic/master_sync_fkie/0.8.9-0",
+    "hash": "6cb064f"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 7,
+  "Publisher": 4,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 11
+}

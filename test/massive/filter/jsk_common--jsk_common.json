@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "jsk_common/jsk_common",
+    "url": "https://github.com/tork-a/jsk_common-release.git",
+    "tag": "release/melodic/jsk_data/2.2.10-0",
+    "hash": "4ae42c2"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 1,
+  "advertise": 0,
+  "publish": 1,
+  "subscribe": 0,
+  "launch": 17,
+  "total": 4
+}

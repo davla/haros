@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "robot_activity/robot_activity_tutorials",
+    "url": "https://github.com/ros-gbp/robot_calibration-release.git",
+    "tag": "release/melodic/robot_calibration/0.6.0-0",
+    "hash": "370d328"
+  },
+  "NodeHandle_base": 26,
+  "NodeHandle_with_arguments": 10,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 11,
+  "Publisher": 12,
+  "advertise": 8,
+  "publish": 8,
+  "subscribe": 8,
+  "launch": 0,
+  "total": 39
+}

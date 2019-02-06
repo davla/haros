@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "graph_msgs",
+    "url": "https://github.com/mikeferguson/grasping_msgs-gbp.git",
+    "tag": "release/melodic/grasping_msgs/0.3.1-0",
+    "hash": "6257644"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

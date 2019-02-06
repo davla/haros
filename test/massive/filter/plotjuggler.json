@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "plotjuggler",
+    "url": "https://github.com/ros-gbp/pluginlib-release.git",
+    "tag": "release/melodic/pluginlib/1.12.1-0",
+    "hash": "b0d7efc"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

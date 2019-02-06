@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_control/controller_interface",
+    "url": "https://github.com/ros-gbp/ros_control-release.git",
+    "tag": "release/melodic/controller_manager/0.15.1-0",
+    "hash": "012ce18"
+  },
+  "NodeHandle_base": 10,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 0,
+  "advertise": 6,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 8
+}

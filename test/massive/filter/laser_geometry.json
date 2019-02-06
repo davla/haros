@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "laser_geometry",
+    "url": "https://github.com/ros-gbp/laser_pipeline-release.git",
+    "tag": "release/melodic/laser_pipeline/1.6.3-0",
+    "hash": "3e831a7"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

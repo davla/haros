@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "navigation/base_local_planner",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/carrot_planner/1.16.2-0",
+    "hash": "9bbc925"
+  },
+  "NodeHandle_base": 1,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

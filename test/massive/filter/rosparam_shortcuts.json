@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "rosparam_shortcuts",
+    "url": "https://github.com/rospilot/rospilot-release.git",
+    "tag": "release/melodic/rospilot/1.5.2-0",
+    "hash": "cedd05e"
+  },
+  "NodeHandle_base": 1,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 13,
+  "advertise": 10,
+  "publish": 13,
+  "subscribe": 17,
+  "launch": 2,
+  "total": 41
+}

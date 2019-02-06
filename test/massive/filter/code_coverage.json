@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "code_coverage",
+    "url": "https://github.com/ros-gbp/collada_urdf-release.git",
+    "tag": "release/melodic/collada_parser/1.12.12-0",
+    "hash": "33bfbc0"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

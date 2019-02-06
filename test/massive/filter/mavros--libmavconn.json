@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "mavros/libmavconn",
+    "url": "https://github.com/mavlink/mavros-release.git",
+    "tag": "release/melodic/mavros/0.28.0-0",
+    "hash": "2881525"
+  },
+  "NodeHandle_base": 33,
+  "NodeHandle_with_arguments": 4,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 36,
+  "Publisher": 52,
+  "advertise": 81,
+  "publish": 59,
+  "subscribe": 31,
+  "launch": 5,
+  "total": 200
+}

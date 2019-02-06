@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "navigation/clear_costmap_recovery",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/costmap_2d/1.16.2-0",
+    "hash": "be47c3d"
+  },
+  "NodeHandle_base": 35,
+  "NodeHandle_with_arguments": 10,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 2,
+  "Subscriber": 15,
+  "Publisher": 25,
+  "advertise": 6,
+  "publish": 10,
+  "subscribe": 5,
+  "launch": 5,
+  "total": 51
+}

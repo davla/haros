@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "dataspeed_pds/dataspeed_pds",
+    "url": "https://github.com/DataspeedInc-release/dataspeed_pds-release.git",
+    "tag": "release/melodic/dataspeed_pds_can/1.0.2-0",
+    "hash": "2546cc3"
+  },
+  "NodeHandle_base": 7,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 5,
+  "Publisher": 6,
+  "advertise": 3,
+  "publish": 12,
+  "subscribe": 4,
+  "launch": 2,
+  "total": 18
+}

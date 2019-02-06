@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_tutorials/rospy_tutorials",
+    "url": "https://github.com/ros-gbp/ros_tutorials-release.git",
+    "tag": "release/melodic/turtlesim/0.9.0-0",
+    "hash": "5df944e"
+  },
+  "NodeHandle_base": 11,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 11,
+  "advertise": 12,
+  "publish": 5,
+  "subscribe": 3,
+  "launch": 1,
+  "total": 29
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "neonavigation_rviz_plugins/trajectory_tracker_rviz_plugins",
+    "url": "https://github.com/nerian-vision/nerian_stereo-release.git",
+    "tag": "release/melodic/nerian_stereo/3.2.1-0",
+    "hash": "3953ba7"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 18,
+  "advertise": 5,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 26
+}

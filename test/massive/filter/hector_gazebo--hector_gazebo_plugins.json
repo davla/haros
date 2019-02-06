@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "hector_gazebo/hector_gazebo_plugins",
+    "url": "https://github.com/tu-darmstadt-ros-pkg-gbp/hector_gazebo-release.git",
+    "tag": "release/melodic/hector_gazebo_thermal_camera/0.5.1-0",
+    "hash": "c60f7f9"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 1,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

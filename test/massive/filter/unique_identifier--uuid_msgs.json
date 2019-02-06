@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "unique_identifier/uuid_msgs",
+    "url": "https://github.com/ros-gbp/urdf-release.git",
+    "tag": "release/melodic/urdf/1.13.1-0",
+    "hash": "ecaf05c"
+  },
+  "NodeHandle_base": 6,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 0
+}

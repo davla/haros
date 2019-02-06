@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "jsk_3rdparty/pgm_learner",
+    "url": "https://github.com/tork-a/jsk_3rdparty-release.git",
+    "tag": "release/melodic/respeaker_ros/2.1.11-0",
+    "hash": "89e859a"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 6,
+  "advertise": 0,
+  "publish": 6,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 8
+}

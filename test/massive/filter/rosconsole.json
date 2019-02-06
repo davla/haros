@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "rosconsole",
+    "url": "https://github.com/ros-gbp/rosconsole_bridge-release.git",
+    "tag": "release/melodic/rosconsole_bridge/0.5.2-0",
+    "hash": "3bc60f1"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

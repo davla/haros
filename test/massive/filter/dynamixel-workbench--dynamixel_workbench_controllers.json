@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "dynamixel-workbench/dynamixel_workbench_controllers",
+    "url": "https://github.com/ROBOTIS-GIT-release/dynamixel-workbench-release.git",
+    "tag": "release/melodic/dynamixel_workbench_operators/2.0.0-0",
+    "hash": "38129af"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 2,
+  "subscribe": 0,
+  "launch": 2,
+  "total": 7
+}

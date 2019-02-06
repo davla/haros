@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "phidgets_drivers/phidgets_imu",
+    "url": "https://github.com/AndyZe/pid-release.git",
+    "tag": "release/melodic/pid/0.0.27-0",
+    "hash": "40289c0"
+  },
+  "NodeHandle_base": 14,
+  "NodeHandle_with_arguments": 3,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 6,
+  "Publisher": 6,
+  "advertise": 5,
+  "publish": 6,
+  "subscribe": 6,
+  "launch": 3,
+  "total": 23
+}

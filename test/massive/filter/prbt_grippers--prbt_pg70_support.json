@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "prbt_grippers/prbt_pg70_support",
+    "url": "https://github.com/stonier/py_trees-release.git",
+    "tag": "release/melodic/py_trees/0.6.1-0",
+    "hash": "e50d4de"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 1,
+  "launch": 0,
+  "total": 1
+}

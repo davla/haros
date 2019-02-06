@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "rtabmap_ros",
+    "url": "https://github.com/ros-gbp/rviz-release.git",
+    "tag": "release/melodic/rviz/1.13.1-0",
+    "hash": "57dafd9"
+  },
+  "NodeHandle_base": 30,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 34,
+  "Publisher": 44,
+  "advertise": 18,
+  "publish": 57,
+  "subscribe": 11,
+  "launch": 0,
+  "total": 107
+}

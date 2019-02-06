@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "rqt/rqt_gui",
+    "url": "https://github.com/ros-gbp/rqt-release.git",
+    "tag": "release/melodic/rqt_gui_cpp/0.5.0-0",
+    "hash": "1aa6db2"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

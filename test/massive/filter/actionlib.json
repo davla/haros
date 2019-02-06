@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "actionlib",
+    "url": "https://github.com/tork-a/adi_driver-release.git",
+    "tag": "release/melodic/adi_driver/1.0.3-0",
+    "hash": "246346c"
+  },
+  "NodeHandle_base": 6,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 4,
+  "Publisher": 3,
+  "advertise": 4,
+  "publish": 3,
+  "subscribe": 0,
+  "launch": 2,
+  "total": 11
+}
