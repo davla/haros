@@ -17,16 +17,16 @@ get_package() {
     local TMP_DIR
     TMP_DIR="$(mktemp -d)"
     [ -z $TMP_DIR ] && { echo >&2 Could not create temporary directory - $URL - $TAG; exit 1; }
-    
+
     git clone "$URL" "$TMP_DIR" &> /dev/null
     [ $? -ne 0 ] && { echo >&2 Error while cloning $URL - $TAG; exit 1; }
-    
+
     git -C "$TMP_DIR" fetch --tags > /dev/null
     [ $? -ne 0 ] && { echo >&2 Error while fetching tags $URL - $TAG; exit 1; }
-    
+
     git -C "$TMP_DIR" reset --hard "$TAG" > /dev/null
     [ $? -ne 0 ] && { echo >&2 Error while resetting $URL - $TAG; exit 1; }
-    
+
     git -C "$TMP_DIR" rev-parse --short "$TAG" | xargs echo "$TMP_DIR"
     [ $? -ne 0 ] && { echo >&2 Error while printing hash for $URL - $TAG; exit 1; }
 }
@@ -90,7 +90,7 @@ while read PACKAGE URL TAG; do
 
     echo "Cloning $PACKAGE"
     read PACKAGE_ROOT HASH < <(get_package "$URL" "$TAG")
-    
+
     [ -z $PACKAGE_ROOT ] && { echo >&2 PACKAGE_ROOT is empty - $HASH; exit 1; }
     [ -z $HASH ] && { echo >&2 HASH is empty - $PACKAGE_ROOT; exit 1; }
 
