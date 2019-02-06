@@ -178,25 +178,24 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
             # Getting package hash for docker-compose
             PACKAGE_HASH="$(latest-hash "$URL" '' "$TAG")"
             PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
-            PACKAGE_NAME="$(basename "$PACKAGE")"
-
-            BUILD_IMAGE="$PACKAGE_ID"
-            ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE_ID"
-
-            # Building the package
-            build-if-not-in-hub 'package-build'
         else
-            ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE"
+            PACKAGE_ID="$PACKAGE"
 
-            PACKAGE_HASH="${PACKAGE##*-}"
             PACKAGE="${PACKAGE//--/\/}"
             PACKAGE="${PACKAGE%-*}"
             PACKAGE="${PACKAGE##*-}"
+
+            PACKAGE_HASH="${PACKAGE_ID##*-}"
         fi
+
+        PACKAGE_NAME="$(basename "$PACKAGE")"
+        BUILD_IMAGE="$PACKAGE_ID"
+        ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE_ID"
 
         export ANALYSIS_IMAGE BUILD_IMAGE PACKAGE PACKAGE_NAME PACKAGE_ID
 
         # Building the analysis images
+        build-if-not-in-hub 'package-build'
         build-if-not-in-hub 'analysis'
 
         # Analysing
