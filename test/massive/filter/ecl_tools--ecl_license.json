@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ecl_tools/ecl_license",
+    "url": "https://github.com/yujinrobot-release/ecl_tools-release.git",
+    "tag": "release/melodic/ecl_tools/0.61.7-0",
+    "hash": "6edb77e"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

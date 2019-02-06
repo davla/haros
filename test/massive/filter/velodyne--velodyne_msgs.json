@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "velodyne/velodyne_msgs",
+    "url": "https://github.com/ros-drivers-gbp/velodyne-release.git",
+    "tag": "release/melodic/velodyne_pointcloud/1.5.2-0",
+    "hash": "c814042"
+  },
+  "NodeHandle_base": 18,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 6,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 3,
+  "subscribe": 3,
+  "launch": 8,
+  "total": 15
+}

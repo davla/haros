@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "image_transport_plugins/compressed_depth_image_transport",
+    "url": "https://github.com/ros-gbp/image_transport_plugins-release.git",
+    "tag": "release/melodic/compressed_image_transport/1.9.5-0",
+    "hash": "07a3b34"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 21,
+  "Publisher": 18,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 39
+}

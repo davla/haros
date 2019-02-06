@@ -18,7 +18,7 @@ services:
       - PACKAGE
       - PACKAGE_HASH
 
-    image: "davla/thesis:haros-${HAROS_HASH}-bonsai-${BONSAI_HASH}-${PACKAGE_ID}"
+    image: "davla/thesis:${ANALYSIS_IMAGE}"
 
     volumes:
       - type: bind
@@ -73,15 +73,15 @@ services:
       context: ./package
       dockerfile: Dockerfile.build
 
-    image: "davla/thesis:${PACKAGE_ID}"
+    image: "davla/thesis:${BUILD_IMAGE}"
 
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: dataspeed_ulc_ros/dataspeed_ulc
-      PACKAGE_HASH: 'ac692e71'
+      PACKAGE: mavros/libmavconn
+      PACKAGE_HASH: '2881525'
 
-    image: "davla/thesis:dataspeed_ulc_ros--dataspeed_ulc-ac692e7"
+    image: "davla/thesis:haros-884b789-bonsai-3d2b1bb-mavros--libmavconn-2881525"
 
     volumes:
       - type: bind

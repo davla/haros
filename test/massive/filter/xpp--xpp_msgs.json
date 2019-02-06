@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "xpp/xpp_msgs",
+    "url": "https://github.com/leggedrobotics/xpp-release.git",
+    "tag": "release/melodic/xpp_quadrotor/1.0.9-0",
+    "hash": "1dc44c6"
+  },
+  "NodeHandle_base": 1,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 1,
+  "advertise": 1,
+  "publish": 1,
+  "subscribe": 1,
+  "launch": 1,
+  "total": 4
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "navigation/global_planner",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/map_server/1.16.2-0",
+    "hash": "2626a17"
+  },
+  "NodeHandle_base": 5,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 1,
+  "Subscriber": 4,
+  "Publisher": 3,
+  "advertise": 4,
+  "publish": 3,
+  "subscribe": 1,
+  "launch": 0,
+  "total": 12
+}

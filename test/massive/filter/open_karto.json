@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "open_karto",
+    "url": "https://github.com/ros-perception/opencv_apps-release.git",
+    "tag": "release/melodic/opencv_apps/2.0.0-0",
+    "hash": "f9801d9"
+  },
+  "NodeHandle_base": 15,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 8,
+  "Subscriber": 77,
+  "Publisher": 76,
+  "advertise": 6,
+  "publish": 50,
+  "subscribe": 7,
+  "launch": 27,
+  "total": 166
+}

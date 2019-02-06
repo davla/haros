@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "mrpt_navigation/mrpt_tutorials",
+    "url": "https://github.com/mrpt-ros-pkg-release/mrpt_slam-release.git",
+    "tag": "release/melodic/mrpt_ekf_slam_2d/0.1.8-0",
+    "hash": "a89cafb"
+  },
+  "NodeHandle_base": 2,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 1,
+  "advertise": 2,
+  "publish": 2,
+  "subscribe": 1,
+  "launch": 2,
+  "total": 6
+}

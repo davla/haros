@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ypspur_ros",
+    "url": "https://github.com/yujinrobot-release/yujin_ocs-release.git",
+    "tag": "release/melodic/yocs_ar_marker_tracking/0.8.2-0",
+    "hash": "e7ccbec"
+  },
+  "NodeHandle_base": 1,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 2,
+  "Publisher": 3,
+  "advertise": 0,
+  "publish": 3,
+  "subscribe": 2,
+  "launch": 4,
+  "total": 7
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_tutorials/ros_tutorials",
+    "url": "https://github.com/ros-gbp/ros_tutorials-release.git",
+    "tag": "release/melodic/roscpp_tutorials/0.9.0-0",
+    "hash": "794e1d9"
+  },
+  "NodeHandle_base": 47,
+  "NodeHandle_with_arguments": 3,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 2,
+  "Subscriber": 27,
+  "Publisher": 9,
+  "advertise": 5,
+  "publish": 3,
+  "subscribe": 23,
+  "launch": 1,
+  "total": 64
+}

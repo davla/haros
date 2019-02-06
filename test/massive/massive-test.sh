@@ -73,11 +73,18 @@ MAIN_LOG="$RESULTS_DIR/main.log"
 shopt -s expand_aliases
 
 alias select-packages='cat'
+alias get-packages='pipenv run python ros-packages.py "$ROS_DISTRO"\
+--names --urls'
 
-while getopts 'h:b:r:p:' OPTION; do
+while getopts 'h:b:r:f:p:' OPTION; do
     case "$OPTION" in
         'b')
             BONSAI_HASH="$OPTARG"
+            ;;
+
+        'f')
+            # shellcheck disable=2139
+            alias select-packages="grep -P -f '$OPTARG'"
             ;;
 
         'h')
@@ -86,7 +93,9 @@ while getopts 'h:b:r:p:' OPTION; do
 
         'p')
             # shellcheck disable=2139
-            alias select-packages="grep -P -f '$OPTARG'"
+            [[ -f "$OPTARG" ]] \
+                && alias get-packages="cat $OPTARG" \
+                || alias get-packages="echo $OPTARG"
             ;;
 
         'r')
@@ -161,22 +170,36 @@ cd - &> /dev/null || exit 1
 #####################################################
 
 # Getting all package names and urls
-pipenv run python ros-packages.py "$ROS_DISTRO" --names --urls \
-    | select-packages | while read PACKAGE URL TAG; do
+get-packages | select-packages | while read PACKAGE URL TAG; do
         cd ../docker || exit 1
 
-        # Getting package hash for docker-compose
-        PACKAGE_HASH="$(latest-hash "$URL" '' "$TAG")"
-        PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
-        PACKAGE_NAME="$(basename "$PACKAGE")"
+        if [[ -n "$URL" && -n "$TAG" ]]; then
 
-        export PACKAGE PACKAGE_NAME PACKAGE_ID
+            # Getting package hash for docker-compose
+            PACKAGE_HASH="$(latest-hash "$URL" '' "$TAG")"
+            PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
+            PACKAGE_NAME="$(basename "$PACKAGE")"
 
-        # Building the package and the analysis iages
-        build-if-not-in-hub 'package-build'
+            BUILD_IMAGE="$PACKAGE_ID"
+            ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE_ID"
+
+            # Building the package
+            build-if-not-in-hub 'package-build'
+        else
+            ANALYSIS_IMAGE="$PACKAGE"
+
+            PACKAGE_HASH="${PACKAGE##*-}"
+            PACKAGE="${PACKAGE//--/\/}"
+            PACKAGE="${PACKAGE%-*}"
+            PACKAGE="${PACKAGE##*-}"
+        fi
+
+        echo $ANALYSIS_IMAGE $PACKAGE $PACKAGE_HASH
+
+        # Building the analysis images
         build-if-not-in-hub 'analysis'
 
-        # Analysinz
+        # Analysing
         docker-compose up analysis
         docker-compose down
 

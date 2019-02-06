@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_controllers/imu_sensor_controller",
+    "url": "https://github.com/ros-gbp/ros_controllers-release.git",
+    "tag": "release/melodic/joint_state_controller/0.14.2-0",
+    "hash": "3b03b8a"
+  },
+  "NodeHandle_base": 13,
+  "NodeHandle_with_arguments": 4,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 2,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 1,
+  "launch": 1,
+  "total": 4
+}

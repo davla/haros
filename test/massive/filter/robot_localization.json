@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "robot_localization",
+    "url": "https://github.com/locusrobotics/robot_navigation-release.git",
+    "tag": "release/melodic/costmap_queue/0.2.4-0",
+    "hash": "7a27487"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

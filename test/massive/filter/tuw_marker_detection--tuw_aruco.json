@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "tuw_marker_detection/tuw_aruco",
+    "url": "https://github.com/tuw-robotics/tuw_marker_detection-release.git",
+    "tag": "release/melodic/tuw_checkerboard/0.1.1-1",
+    "hash": "a1be669"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 5,
+  "subscribe": 1,
+  "launch": 2,
+  "total": 8
+}

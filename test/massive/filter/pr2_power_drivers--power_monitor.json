@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "pr2_power_drivers/power_monitor",
+    "url": "https://github.com/pr2-gbp/pr2_power_drivers-release.git",
+    "tag": "release/melodic/pr2_power_board/1.1.7-0",
+    "hash": "7b7b81c"
+  },
+  "NodeHandle_base": 9,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 5,
+  "advertise": 7,
+  "publish": 6,
+  "subscribe": 1,
+  "launch": 3,
+  "total": 16
+}

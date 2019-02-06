@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "p2os/p2os_urdf",
+    "url": "https://github.com/astuff/pacmod3-release.git",
+    "tag": "release/melodic/pacmod3/1.2.1-0",
+    "hash": "d3ae660"
+  },
+  "NodeHandle_base": 2,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 15,
+  "Publisher": 53,
+  "advertise": 48,
+  "publish": 36,
+  "subscribe": 13,
+  "launch": 1,
+  "total": 129
+}

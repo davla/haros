@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "dataspeed_can/dataspeed_can_tools",
+    "url": "https://github.com/DataspeedInc-release/dataspeed_can-release.git",
+    "tag": "release/melodic/dataspeed_can_usb/1.0.12-0",
+    "hash": "d28949b"
+  },
+  "NodeHandle_base": 10,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 4,
+  "Publisher": 6,
+  "advertise": 3,
+  "publish": 3,
+  "subscribe": 1,
+  "launch": 1,
+  "total": 14
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "image_pipeline/image_view",
+    "url": "https://github.com/ros-gbp/image_pipeline-release.git",
+    "tag": "release/melodic/stereo_image_proc/1.12.23-0",
+    "hash": "a8d2429"
+  },
+  "NodeHandle_base": 11,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 2,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 11,
+  "Publisher": 2,
+  "advertise": 2,
+  "publish": 2,
+  "subscribe": 8,
+  "launch": 1,
+  "total": 23
+}

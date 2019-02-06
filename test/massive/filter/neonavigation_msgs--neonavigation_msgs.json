@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "neonavigation_msgs/neonavigation_msgs",
+    "url": "https://github.com/at-wat/neonavigation_msgs-release.git",
+    "tag": "release/melodic/planner_cspace_msgs/0.3.1-0",
+    "hash": "97e5f82"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

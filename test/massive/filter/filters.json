@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "filters",
+    "url": "https://github.com/introlab/find_object_2d-release.git",
+    "tag": "release/melodic/find_object_2d/0.6.2-1",
+    "hash": "b74ac22"
+  },
+  "NodeHandle_base": 12,
+  "NodeHandle_with_arguments": 8,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 12,
+  "Publisher": 3,
+  "advertise": 3,
+  "publish": 3,
+  "subscribe": 8,
+  "launch": 4,
+  "total": 26
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ibeo_lux",
+    "url": "https://github.com/ethz-adrl/ifopt-release.git",
+    "tag": "release/melodic/ifopt/2.0.6-0",
+    "hash": "5d96174"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 2,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

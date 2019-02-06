@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "jskeus",
+    "url": "https://github.com/locusrobotics/json_transport-release.git",
+    "tag": "release/melodic/json_msgs/0.0.3-0",
+    "hash": "5099d01"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

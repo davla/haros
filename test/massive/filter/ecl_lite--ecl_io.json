@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ecl_lite/ecl_io",
+    "url": "https://github.com/yujinrobot-release/ecl_lite-release.git",
+    "tag": "release/melodic/ecl_lite/0.61.6-0",
+    "hash": "f40f0a3"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

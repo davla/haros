@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "pilz_robots/prbt_moveit_config",
+    "url": "https://github.com/PilzDE/pilz_robots-release.git",
+    "tag": "release/melodic/prbt_support/0.5.1-2",
+    "hash": "43d5851"
+  },
+  "NodeHandle_base": 1,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 2,
+  "total": 0
+}

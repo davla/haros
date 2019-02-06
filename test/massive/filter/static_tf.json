@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "static_tf",
+    "url": "https://github.com/ros-gbp/std_capabilities-release.git",
+    "tag": "release/melodic/std_capabilities/0.1.0-0",
+    "hash": "b3ce478"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 3,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 3
+}

@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "talos_robot/talos_description_inertial",
+    "url": "https://github.com/rst-tu-dortmund/teb_local_planner-release.git",
+    "tag": "release/melodic/teb_local_planner/0.8.1-0",
+    "hash": "c1c28be"
+  },
+  "NodeHandle_base": 23,
+  "NodeHandle_with_arguments": 3,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 10,
+  "Publisher": 11,
+  "advertise": 5,
+  "publish": 22,
+  "subscribe": 6,
+  "launch": 1,
+  "total": 32
+}

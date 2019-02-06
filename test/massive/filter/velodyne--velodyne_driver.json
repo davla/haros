@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "velodyne/velodyne_driver",
+    "url": "https://github.com/ros-drivers-gbp/velodyne-release.git",
+    "tag": "release/melodic/velodyne_laserscan/1.5.2-0",
+    "hash": "cfd1099"
+  },
+  "NodeHandle_base": 8,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 14,
+  "Publisher": 10,
+  "advertise": 3,
+  "publish": 9,
+  "subscribe": 3,
+  "launch": 0,
+  "total": 30
+}

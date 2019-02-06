@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "ros_type_introspection",
+    "url": "https://github.com/gt-rail-release/rosauth-release.git",
+    "tag": "release/melodic/rosauth/0.1.7-2",
+    "hash": "2221249"
+  },
+  "NodeHandle_base": 2,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 1,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 1
+}

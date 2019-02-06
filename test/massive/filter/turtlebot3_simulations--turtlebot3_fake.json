@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "turtlebot3_simulations/turtlebot3_fake",
+    "url": "https://github.com/ROBOTIS-GIT-release/turtlebot3_simulations-release.git",
+    "tag": "release/melodic/turtlebot3_gazebo/1.2.0-0",
+    "hash": "3271702"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 2,
+  "advertise": 1,
+  "publish": 1,
+  "subscribe": 2,
+  "launch": 14,
+  "total": 8
+}

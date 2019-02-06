@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "robot_navigation/dwb_critics",
+    "url": "https://github.com/locusrobotics/robot_navigation-release.git",
+    "tag": "release/melodic/dwb_local_planner/0.2.4-0",
+    "hash": "b4168b8"
+  },
+  "NodeHandle_base": 26,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 5,
+  "Publisher": 17,
+  "advertise": 15,
+  "publish": 20,
+  "subscribe": 0,
+  "launch": 1,
+  "total": 37
+}

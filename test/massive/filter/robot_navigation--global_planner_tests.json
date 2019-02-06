@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "robot_navigation/global_planner_tests",
+    "url": "https://github.com/locusrobotics/robot_navigation-release.git",
+    "tag": "release/melodic/locomotor/0.2.4-0",
+    "hash": "bfe9f3b"
+  },
+  "NodeHandle_base": 28,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 4,
+  "Publisher": 15,
+  "advertise": 5,
+  "publish": 16,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 24
+}

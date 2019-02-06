@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "geometry/tf",
+    "url": "https://github.com/ros-gbp/geometry-release.git",
+    "tag": "release/melodic/tf_conversions/1.12.0-0",
+    "hash": "385f8ae"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

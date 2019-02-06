@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "stage",
+    "url": "https://github.com/ros-gbp/stage_ros-release.git",
+    "tag": "release/melodic/stage_ros/1.8.0-0",
+    "hash": "22b3667"
+  },
+  "NodeHandle_base": 2,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 6,
+  "Publisher": 7,
+  "advertise": 12,
+  "publish": 7,
+  "subscribe": 1,
+  "launch": 0,
+  "total": 26
+}

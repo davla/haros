@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "navigation/navigation",
+    "url": "https://github.com/ros-gbp/navigation-release.git",
+    "tag": "release/melodic/rotate_recovery/1.16.2-0",
+    "hash": "35b4817"
+  },
+  "NodeHandle_base": 3,
+  "NodeHandle_with_arguments": 2,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 1,
+  "advertise": 1,
+  "publish": 1,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 2
+}

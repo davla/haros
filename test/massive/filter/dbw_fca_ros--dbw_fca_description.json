@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "dbw_fca_ros/dbw_fca_description",
+    "url": "https://github.com/DataspeedInc-release/dbw_fca_ros-release.git",
+    "tag": "release/melodic/dbw_fca_joystick_demo/1.0.0-0",
+    "hash": "9ed976f"
+  },
+  "NodeHandle_base": 4,
+  "NodeHandle_with_arguments": 1,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 7,
+  "advertise": 7,
+  "publish": 7,
+  "subscribe": 1,
+  "launch": 1,
+  "total": 16
+}

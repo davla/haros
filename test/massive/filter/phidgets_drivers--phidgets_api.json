@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "phidgets_drivers/phidgets_api",
+    "url": "https://github.com/ros-drivers-gbp/phidgets_drivers-release.git",
+    "tag": "release/melodic/phidgets_drivers/0.7.7-0",
+    "hash": "09f836c"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 0,
+  "Publisher": 0,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 0
+}

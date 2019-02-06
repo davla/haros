@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "dynamixel-workbench/dynamixel_workbench_single_manager",
+    "url": "https://github.com/ROBOTIS-GIT-release/dynamixel-workbench-release.git",
+    "tag": "release/melodic/dynamixel_workbench_single_manager_gui/2.0.0-0",
+    "hash": "c54afbd"
+  },
+  "NodeHandle_base": 2,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 6,
+  "Publisher": 1,
+  "advertise": 0,
+  "publish": 0,
+  "subscribe": 14,
+  "launch": 0,
+  "total": 21
+}

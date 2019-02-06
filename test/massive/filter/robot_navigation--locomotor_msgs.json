@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "robot_navigation/locomotor_msgs",
+    "url": "https://github.com/locusrobotics/robot_navigation-release.git",
+    "tag": "release/melodic/locomove_base/0.2.4-0",
+    "hash": "d10d1e0"
+  },
+  "NodeHandle_base": 13,
+  "NodeHandle_with_arguments": 3,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 1,
+  "Publisher": 1,
+  "advertise": 1,
+  "publish": 5,
+  "subscribe": 1,
+  "launch": 0,
+  "total": 4
+}

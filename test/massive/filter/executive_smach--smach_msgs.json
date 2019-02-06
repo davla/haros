@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "executive_smach/smach_msgs",
+    "url": "https://github.com/ros-gbp/executive_smach-release.git",
+    "tag": "release/melodic/smach_ros/2.0.1-0",
+    "hash": "7f3c582"
+  },
+  "NodeHandle_base": 0,
+  "NodeHandle_with_arguments": 0,
+  "Publisher_bare": 0,
+  "Publication": 0,
+  "TopicManager": 0,
+  "SingleSubscriberPublisher": 0,
+  "Subscriber": 3,
+  "Publisher": 4,
+  "advertise": 0,
+  "publish": 8,
+  "subscribe": 0,
+  "launch": 0,
+  "total": 7
+}
