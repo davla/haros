@@ -93,7 +93,7 @@ while getopts 'h:b:r:f:p:' OPTION; do
 
         'p')
             # shellcheck disable=2139
-            [[ -f "$OPTARG" ]] \
+            [[ -e "$OPTARG" ]] \
                 && alias get-packages="cat $OPTARG" \
                 || alias get-packages="echo $OPTARG"
             ;;
@@ -186,7 +186,7 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
             # Building the package
             build-if-not-in-hub 'package-build'
         else
-            ANALYSIS_IMAGE="$PACKAGE"
+            ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE"
 
             PACKAGE_HASH="${PACKAGE##*-}"
             PACKAGE="${PACKAGE//--/\/}"
@@ -194,7 +194,7 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
             PACKAGE="${PACKAGE##*-}"
         fi
 
-        echo $ANALYSIS_IMAGE $PACKAGE $PACKAGE_HASH
+        export ANALYSIS_IMAGE BUILD_IMAGE PACKAGE PACKAGE_NAME PACKAGE_ID
 
         # Building the analysis images
         build-if-not-in-hub 'analysis'
