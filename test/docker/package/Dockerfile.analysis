@@ -37,6 +37,7 @@ packages:\n\
 configurations:\n\
   massive-analysis:" >> /home/ros/.haros/index.yaml
 RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
+    && source /home/ros/catkin_ws/devel/setup.bash \
     && rospack find $PACKAGE_NAME | xargs -i find '{}' -name '*.launch' \
         -printf \"    - $PACKAGE/%P\n\" >> ./launch_files.txt \
     && { test -s ./launch_files.txt \
