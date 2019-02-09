@@ -74,8 +74,9 @@ MAIN_LOG="$RESULTS_DIR/main.log"
 shopt -s expand_aliases
 
 alias select-packages='cat'
-alias get-packages='pipenv run python ros-packages.py "$ROS_DISTRO"\
---names --urls'
+# shellcheck disable=2139
+alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\"\
+\"\$ROS_DISTRO\" --names --urls"
 
 while getopts 'h:b:r:f:p:' OPTION; do
     case "$OPTION" in
