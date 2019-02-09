@@ -48,7 +48,7 @@ function rm-images {
 #                   Variables
 #
 #####################################################
- 
+
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs -i readlink -f '{}/..')"
 NOW="$(date '+%Y-%m-%d@%H:%M')"
 HAROS_HASH="$(git rev-parse --short HEAD)"
@@ -74,8 +74,9 @@ MAIN_LOG="$RESULTS_DIR/main.log"
 shopt -s expand_aliases
 
 alias select-packages='cat'
-alias get-packages='pipenv run python ros-packages.py "$ROS_DISTRO"\
---names --urls'
+# shellcheck disable=2139
+alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\"\
+\"\$ROS_DISTRO\" --names --urls"
 
 while getopts 'h:b:r:f:p:' OPTION; do
     case "$OPTION" in
@@ -186,7 +187,7 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
             PACKAGE="${PACKAGE%-*}"
             PACKAGE="${PACKAGE##*-}"
 
-            PACKAGE_HASH="${PACKAGE_ID##*-}"    
+            PACKAGE_HASH="${PACKAGE_ID##*-}"
         fi
 
         PACKAGE_NAME="$(basename "$PACKAGE")"
