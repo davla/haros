@@ -194,7 +194,8 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
         BUILD_IMAGE="$PACKAGE_ID"
         ANALYSIS_IMAGE="haros-$HAROS_HASH-bonsai-$BONSAI_HASH-$PACKAGE_ID"
 
-        export ANALYSIS_IMAGE BUILD_IMAGE PACKAGE PACKAGE_NAME PACKAGE_ID
+        export ANALYSIS_IMAGE BUILD_IMAGE PACKAGE_ID
+        export PACKAGE PACKAGE_NAME PACKAGE_HASH PACKAGE_URL="$URL"
 
         # Building the analysis images
         build-if-not-in-hub 'package-build'
@@ -206,7 +207,11 @@ get-packages | select-packages | while read PACKAGE URL TAG; do
 
         # Saving disk space
         rm-images "$PACKAGE_ID"
-      done
+
+        # Cleaning up variables
+        unset ANALYSIS_IMAGE BUILD_IMAGE PACKAGE_ID
+        unset PACKAGE PACKAGE_NAME PACKAGE_HASH PACKAGE_URL
+    done
 
 # Saving disk space
 rm-images '(bonsai|haros)'
