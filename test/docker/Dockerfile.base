@@ -15,4 +15,4 @@ RUN useradd -m -U -s /bin/bash ros
 COPY ./artful.list /etc/apt/sources.list.d/
 RUN apt-get update && apt-get -y install jq less nano tree python-pip \
     python3-pip
-RUN pip3 install pipenv rosinstall_generator
+RUN pip3 install pipenv rosinstall_generator pyaml
