@@ -19,8 +19,8 @@ get_git() {
     git -C "$TMP_DIR" fetch --tags > /dev/null
     [ $? -ne 0 ] && { echo >&2 Error while fetching tags $URL - $TAG; exit 1; }
 
-    git -C "$TMP_DIR" reset --hard "$TAG" > /dev/null
-    [ $? -ne 0 ] && { echo >&2 Error while resetting $URL - $TAG; exit 1; }
+    git -C "$TMP_DIR" checkout "$TAG" > /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while checking out $URL - $TAG; exit 1; }
 
     git -C "$TMP_DIR" rev-parse --short "$TAG" | xargs echo "$TMP_DIR"
     [ $? -ne 0 ] && { echo >&2 Error while printing hash for $URL - $TAG; exit 1; }
