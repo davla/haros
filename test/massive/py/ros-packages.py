@@ -5,7 +5,6 @@ from argparse import ArgumentParser
 from rosinstall_generator.generator import (ARG_ALL_PACKAGES,
                                             generate_rosinstall,
                                             sort_rosinstall)
-import yaml
 
 
 def get_names(packages):
@@ -17,15 +16,25 @@ def get_names(packages):
 
 def get_urls(packages):
     return (
-        '{} {}'.format(package['uri'], package['version'])
+        ' '.join((package['uri'], package['version'], package['vcs']))
         for package in packages
     )
 
 
 def process_package(package):
-    package = package.get('git', package.get('hg', None))
+    try:
+        package = package['git']
+        package['vcs'] = 'git'
+    except KeyError:
+        try:
+            package = package['hg']
+            package['vcs'] = 'hg'
+        except KeyError:
+            raise ValueError('Unknown vcs')
+
     package['name'] = package['local-name']
     del package['local-name']
+
     return package
 
 
@@ -42,10 +51,6 @@ args = parser.parse_args()
 
 packages = list(map(process_package, sort_rosinstall(generate_rosinstall(
     args.rosdistro, [ARG_ALL_PACKAGES], upstream_source_version=args.devel))))
-
-# packages = list(packages)
-# print(next(p for p in packages if 'self_test'in p['name']))
-# print(yaml.dump(packages, default_flow_style=False))
 
 results = (action(packages) for action in args.actions)
 for result in zip(*results):
