@@ -18,24 +18,64 @@ function build-if-not-in-hub {
     fi
 }
 
-function latest-hash {
-    local GIT_REPO="$1"
-    local BRANCH="$2"
-    local TAG="${3:-HEAD}"
+get_git() {
+    local URL="$1" TAG="$2"
 
     local TMP_DIR
     TMP_DIR="$(mktemp -d)"
-    [[ -z "$BRANCH" ]] \
-        && git clone --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null \
-        || git clone -b "$BRANCH" --depth 1 "$GIT_REPO" "$TMP_DIR" &> /dev/null
-    git -C "$TMP_DIR" fetch --tags &> /dev/null
+    [ -z $TMP_DIR ] && { echo >&2 Could not create temporary directory - $URL - $TAG; exit 1; }
 
-    local LATEST_HASH
-    LATEST_HASH="$(git -C "$TMP_DIR" rev-parse --short "$TAG")"
+    git clone "$URL" "$TMP_DIR" &> /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while cloning $URL - $TAG; exit 1; }
 
-    rm -rf "$TMP_DIR" &> /dev/null
+    git -C "$TMP_DIR" fetch --tags > /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while fetching tags $URL - $TAG; exit 1; }
 
-    echo "$LATEST_HASH"
+    git -C "$TMP_DIR" reset --hard "$TAG" > /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while resetting $URL - $TAG; exit 1; }
+
+    git -C "$TMP_DIR" rev-parse --short "$TAG"
+    [ $? -ne 0 ] && { echo >&2 Error while printing hash for $URL - $TAG; exit 1; }
+
+    rm -rf "$TMP_DIR"
+}
+
+get_hg() {
+    local URL="$1" TAG="$2"
+
+    local TMP_DIR
+    TMP_DIR="$(mktemp -d)"
+    [ -z $TMP_DIR ] && { echo >&2 Could not create temporary directory - $URL - $TAG; exit 1; }
+
+    hg clone "$URL" "$TMP_DIR" &> /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while cloning $URL - $TAG; exit 1; }
+
+    hg --cwd "$TMP_DIR" pull > /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while pulling $URL - $TAG; exit 1; }
+
+    hg --cwd "$TMP_DIR" update "$TAG" > /dev/null
+    [ $? -ne 0 ] && { echo >&2 Error while updating $URL - $TAG; exit 1; }
+
+    hg --cwd "$TMP_DIR" id -i
+    [ $? -ne 0 ] && { echo >&2 Error while printing hash for $URL - $TAG; exit 1; }
+
+    rm -rf "$TMP_DIR"
+}
+
+get_hash() {
+    case "$1" in
+        'git')
+            get_git "${@:2}"
+            ;;
+
+        'hg')
+            get_hg "${@:2}"
+            ;;
+
+        *)
+            echo >&2 "$1: vcs unknown (${*:2})"
+            ;;
+    esac
 }
 
 function rm-images {
@@ -181,13 +221,13 @@ cd - &> /dev/null || exit 1
 #####################################################
 
 # Getting all package names and urls
-get-packages | select-packages | while read PACKAGE URL TAG; do
+get-packages | select-packages | while read PACKAGE URL TAG VCS; do
         cd "$DOCKER_DIR" || exit 1
 
-        if [[ -n "$URL" && -n "$TAG" ]]; then
+        if [[ -n "$URL" && -n "$TAG" && -n "$VCS" ]]; then
 
             # Getting package hash for docker-compose
-            PACKAGE_HASH="$(latest-hash "$URL" '' "$TAG")"
+            PACKAGE_HASH="$(get_hash "$VCS" "$URL" "$TAG")"
             PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
         else
             PACKAGE_ID="$PACKAGE"
