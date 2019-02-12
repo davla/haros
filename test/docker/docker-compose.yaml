@@ -67,9 +67,8 @@ services:
   package-build:
     build:
       args:
-        - PACKAGE_HASH
+        - PACKAGE_DEVEL
         - PACKAGE_NAME
-        - PACKAGE_URL
         - ROS_DISTRO
 
       context: ./package
@@ -80,10 +79,10 @@ services:
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: rosparam_shortcuts
-      PACKAGE_HASH: 'cedd05e'
+      PACKAGE: mavros/libmavconn
+      PACKAGE_HASH: '2881525'
 
-    image: "davla/thesis:ypspur_ros-e7ccbec"
+    image: "davla/thesis:haros-884b789-bonsai-3d2b1bb-mavros--libmavconn-2881525"
 
     volumes:
       - type: bind

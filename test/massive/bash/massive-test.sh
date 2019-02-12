@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=2139
+
 #####################################################
 #
 #                   Functions
@@ -52,6 +54,7 @@ function rm-images {
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs -i readlink -f '{}/..')"
 NOW="$(date '+%Y-%m-%d@%H:%M')"
 HAROS_HASH="$(git rev-parse --short HEAD)"
+PACKAGE_DEVEL=false
 ROS_DISTRO='melodic'
 
 BONSAI_HOME="$BASE_DIR/../../../bonsai"
@@ -78,10 +81,16 @@ alias select-packages='cat'
 alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\"\
 \"\$ROS_DISTRO\" --names --urls"
 
-while getopts 'h:b:r:f:p:' OPTION; do
+while getopts 'b:df:h:r:p:' OPTION; do
     case "$OPTION" in
         'b')
             BONSAI_HASH="$OPTARG"
+            ;;
+
+        'd')
+            PACKAGE_DEVEL=true
+            alias get-packages="pipenv run python \
+\"$BASE_DIR/py/ros-packages.py\" \"\$ROS_DISTRO\" --names --urls --devel"
             ;;
 
         'f')
@@ -117,7 +126,7 @@ done
 #
 #####################################################
 
-export BONSAI_HASH HAROS_HASH RESULTS_DIR ROS_DISTRO
+export BONSAI_HASH HAROS_HASH PACKAGE_DEVEL RESULTS_DIR ROS_DISTRO
 
 #####################################################
 #
