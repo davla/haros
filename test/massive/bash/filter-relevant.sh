@@ -155,6 +155,7 @@ while read PACKAGE URL TAG VCS; do
 {
     "package": {
         "name": "$PACKAGE",
+        "vcs": "$VCS",
         "url": "$URL",
         "tag": "$TAG",
         "hash": "$HASH"
