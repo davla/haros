@@ -93,20 +93,13 @@ function rm-images {
 
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs -i readlink -f '{}/..')"
 NOW="$(date '+%Y-%m-%d@%H:%M')"
-HAROS_HASH="$(git rev-parse --short HEAD)"
 PACKAGE_DEVEL=false
 ROS_DISTRO='melodic'
 
-BONSAI_HOME="$BASE_DIR/../../../bonsai"
 DOCKER_DIR="$BASE_DIR/../docker"
 RESULTS_DIR="$BASE_DIR/results/$NOW"
 
 MAIN_LOG="$RESULTS_DIR/main.log"
-
-[[ -d "$BONSAI_HOME" ]] \
-    && BONSAI_HASH="$(git -C "$BONSAI_HOME" rev-parse --short HEAD)" \
-    || BONSAI_HASH="$(latest-hash 'https://github.com/davla/bonsai.git' \
-        'py-parser')"
 
 #####################################################
 #
@@ -160,6 +153,16 @@ while getopts 'b:df:h:r:p:' OPTION; do
     esac
 done
 
+[[ -z "$HAROS_HASH"  ]] && {
+    echo >&2 'No haros hash specified (-h)'
+    exit 1
+}
+
+[[ -z "$BONSAI_HASH"  ]] && {
+    echo >&2 'No bonsai hash specified (-b)'
+    exit 1
+}
+
 #####################################################
 #
 #       Exporting variables to environment
@@ -177,12 +180,6 @@ export BONSAI_HASH HAROS_HASH PACKAGE_DEVEL RESULTS_DIR ROS_DISTRO
 # Results for this run of the analysis
 mkdir -p "$RESULTS_DIR"
 chmod -R o+w "$RESULTS_DIR"
-
-# Updating rosdistro and logging hash
-git submodule update
-git submodule status | grep rosdistro | xargs \
-    | awk '{print substr($1, 1, 7)}' \
-    | xargs -i echo "Rosdistro hash: {}" >> "$MAIN_LOG"
 
 # Logging bonsai and haros hashes
 echo "Bonsai hash: $BONSAI_HASH" >> "$MAIN_LOG"
