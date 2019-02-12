@@ -6,11 +6,6 @@
 #
 #####################################################
 
-find_tag_by_commit() {
-    local COMMIT="$1"
-    grep "$COMMIT"
-}
-
 get_git() {
     local URL="$1" TAG="$2"
 
