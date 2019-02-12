@@ -23,7 +23,7 @@ def get_urls(packages):
 
 
 def process_package(package):
-    package = package['git']
+    package = package.get('git', package.get('hg', None))
     package['name'] = package['local-name']
     del package['local-name']
     return package
@@ -31,6 +31,8 @@ def process_package(package):
 
 parser = ArgumentParser(description='An hilarious description')
 parser.add_argument('rosdistro', action='store')
+parser.add_argument('--devel', action='store_true', default=False,
+                    dest='devel')
 parser.add_argument('--names', action='append_const', const=get_names,
                     dest='actions')
 parser.add_argument('--urls', action='append_const', const=get_urls,
@@ -38,8 +40,12 @@ parser.add_argument('--urls', action='append_const', const=get_urls,
 
 args = parser.parse_args()
 
-packages = map(process_package, sort_rosinstall(generate_rosinstall(
-    args.rosdistro, [ARG_ALL_PACKAGES])))
+packages = list(map(process_package, sort_rosinstall(generate_rosinstall(
+    args.rosdistro, [ARG_ALL_PACKAGES], upstream_source_version=args.devel))))
+
+# packages = list(packages)
+# print(next(p for p in packages if 'self_test'in p['name']))
+# print(yaml.dump(packages, default_flow_style=False))
 
 results = (action(packages) for action in args.actions)
 for result in zip(*results):
