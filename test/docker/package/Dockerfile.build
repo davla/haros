@@ -16,11 +16,12 @@ WORKDIR /home/ros/catkin_ws
 RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && catkin_make"
 
 # Installing the package and its dependencies
+COPY --chown=ros:ros ./delete-local-name.py ./delete-local-name.py
 RUN rosinstall_generator --deps --deps-only --rosdistro="$ROS_DISTRO" \
     "$PACKAGE_NAME" > pkgs.rosinstall
 RUN $PACKAGE_DEVEL \
     && rosinstall_generator --upstream-development --rosdistro="$ROS_DISTRO" \
-        "$PACKAGE_NAME" >> pkgs.rosinstall \
+        "$PACKAGE_NAME" | python3 delete-local-name.py pkgs.rosinstall \
     || rosinstall_generator --rosdistro="$ROS_DISTRO" \
         "$PACKAGE_NAME" >> pkgs.rosinstall
 RUN rosws init src pkgs.rosinstall
