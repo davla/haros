@@ -1,0 +1,1 @@
+../../docker/package/delete-local-name.py
