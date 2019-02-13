@@ -92,6 +92,7 @@ function rm-images {
 #####################################################
 
 BASE_DIR="$(dirname "${BASH_SOURCE[0]}" | xargs -i readlink -f '{}/..')"
+GET_HASHES=true
 NOW="$(date '+%Y-%m-%d@%H:%M')"
 PACKAGE_DEVEL=false
 ROS_DISTRO='melodic'
@@ -114,7 +115,7 @@ alias select-packages='cat'
 alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\"\
 \"\$ROS_DISTRO\" --names --urls"
 
-while getopts 'b:df:h:r:p:' OPTION; do
+while getopts 'b:df:Hh:r:p:' OPTION; do
     case "$OPTION" in
         'b')
             BONSAI_HASH="$OPTARG"
@@ -129,6 +130,10 @@ while getopts 'b:df:h:r:p:' OPTION; do
         'f')
             # shellcheck disable=2139
             alias select-packages="grep -P -f '$OPTARG'"
+            ;;
+
+        'H')
+            GET_HASHES=false
             ;;
 
         'h')
@@ -224,7 +229,10 @@ get-packages | select-packages | while read PACKAGE URL TAG VCS; do
         if [[ -n "$URL" && -n "$TAG" && -n "$VCS" ]]; then
 
             # Getting package hash for docker-compose
-            PACKAGE_HASH="$(get_hash "$VCS" "$URL" "$TAG")"
+            $GET_HASHES \
+                && PACKAGE_HASH="$(get_hash "$VCS" "$URL" "$TAG")" \
+                || PACKAGE_HASH="$TAG"
+            
             PACKAGE_ID="${PACKAGE/\//--}-$PACKAGE_HASH"
         else
             PACKAGE_ID="$PACKAGE"
