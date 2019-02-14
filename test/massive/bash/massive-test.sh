@@ -13,8 +13,11 @@ function build-if-not-in-hub {
     local FORCE_BUILD="${2:-false}"
 
     if [[ "$FORCE_BUILD" == 'true' ]] || ! docker-compose pull "$SERVICE"; then
-        docker-compose build "$SERVICE"
-        docker-compose push "$SERVICE"
+        if docker-compose build "$SERVICE"; then
+            docker-compose push "$SERVICE"
+        else
+            false
+        fi
     fi
 }
 
@@ -81,8 +84,12 @@ get_hash() {
 function rm-images {
     local PATTERN="$1"
 
+    yes | docker container prune
+
     docker image ls | grep -P "$PATTERN" | grep -v 'haros-deps' \
         | awk '{print $1 ":" $2}' | xargs docker image rm
+
+    docker image ls | grep '<none>' | awk '{print $3}' | xargs docker image rm
 }
 
 #####################################################
@@ -252,12 +259,15 @@ get-packages | select-packages | while read PACKAGE URL TAG VCS; do
         export PACKAGE PACKAGE_NAME PACKAGE_HASH PACKAGE_URL="$URL"
 
         # Building the analysis images
-        build-if-not-in-hub 'package-build'
-        build-if-not-in-hub 'analysis'
+        if build-if-not-in-hub 'package-build'; then
+            build-if-not-in-hub 'analysis'
 
-        # Analysing
-        docker-compose up analysis
-        docker-compose down
+            # Analysing
+            docker-compose up analysis
+            docker-compose down
+        else
+            echo "$PACKAGE_ID: build failed" >> "$MAIN_LOG"
+        fi
 
         # Saving disk space
         rm-images "$PACKAGE_ID"
