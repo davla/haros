@@ -58,7 +58,6 @@ octomap_mapping https://github.com/OctoMap/octomap_mapping.git d126754 git
 opencv_apps https://github.com/ros-perception/opencv_apps.git bbe6ce8 git
 open_manipulator_simulations https://github.com/ROBOTIS-GIT/open_manipulator_simulations.git c8cf544 git
 openni2_camera https://github.com/ros-drivers/openni2_camera.git 91ad6bf git
-openni_camera https://github.com/ros-drivers/openni_camera.git e898a88 git
 oxford_gps_eth https://bitbucket.org/DataspeedInc/oxford_gps_eth 760c71a50654 hg
 p2os https://github.com/allenh1/p2os.git 8a1a121 git
 pacmod3 https://github.com/astuff/pacmod3.git 163c749 git
