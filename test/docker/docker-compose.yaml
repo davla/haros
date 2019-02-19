@@ -79,10 +79,10 @@ services:
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: mavros/libmavconn
-      PACKAGE_HASH: '2881525'
+      PACKAGE: app_manager
+      PACKAGE_HASH: 'a7d83ff'
 
-    image: "davla/thesis:haros-884b789-bonsai-3d2b1bb-mavros--libmavconn-2881525"
+    image: "davla/thesis:haros-795dcdb-bonsai-3d2b1bb-app_manager-a7d83ff"
 
     volumes:
       - type: bind
