@@ -552,7 +552,7 @@ class PackageExtractor(LoggingObject):
         return PackageParser.parse(os.path.join(path, "package.xml"),
                                    project = project)
 
-    EXCLUDED = (".git", "doc", "bin", "cmake")
+    EXCLUDED = (".git", "doc", "cmake")
 
     def _populate_package(self, pkg):
         self.log.debug("PackageExtractor.populate(%s)", pkg)
@@ -1020,9 +1020,15 @@ class RospyExtractor(LoggingObject):
         self.log.debug("Found Subscription on %s/%s (%s)", ns, name, msg_type)
 
     def _query_comm_primitives(self, node, gs):
-        for call in CodeQuery(gs).all_calls.where_name('Publisher').get():
+        publications = (CodeQuery(gs).all_calls
+                        .where_name(('Publisher', 'rospy.Publisher'))
+                        .get())
+        subscriptions = (CodeQuery(gs).all_calls
+                         .where_name(('Subscriber', 'rospy.Subscriber'))
+                         .get())
+        for call in publications:
             self._on_publication(node, call)
-        for call in CodeQuery(gs).all_calls.where_name('Subscriber').get():
+        for call in subscriptions:
             self._on_subscription(node, call)
         # for call in (CodeQuery(gs).all_calls.where_name("advertiseService")
         #              .where_result("ros::ServiceServer").get()):
@@ -1031,14 +1037,39 @@ class RospyExtractor(LoggingObject):
         #              .where_result("ros::ServiceClient").get()):
         #     self._on_client(node, self._resolve_node_handle(call), call)
 
-    def __init__(self, package):
+    def _setup_path(self):
+        parser = PyAstParser(workspace=self.package.path)
+        setup = parser.parse(os.path.join(self.package.path, 'setup.py'))
+
+        setup_call = (CodeQuery(setup).all_calls
+                      .where_name(('setup', 'generate_distutils_setup'))
+                      .get()[0])
+        packages = self.get_arg(setup_call, 0, 'packages').value
+        package_dir = {
+            keyword.name: keyword.value
+            for keyword in self.get_arg(setup_call, 0, 'package_dir').value
+        }
+
+        pythonpath = (package_dir.get(pkg, pkg) for pkg in packages)
+        try:
+            root = package_dir['']
+            pythonpath = (os.path.join(root, path) for path in pythonpath)
+        except KeyError:
+            pass
+
+        return [os.path.join(self.package.path, path) for path in pythonpath]
+
+    def __init__(self, package, workspace):
         self.package = package
+        self.workspace = workspace
+        self.pythonpath = self._setup_path()
 
     def extract(self, node):
         self.log.debug("Parsing Python files for node %s", node.id)
-        parser = PyAstParser()
+        parser = PyAstParser(pythonpath=self.pythonpath,
+                             workspace=self.workspace)
         for sf in node.source_files:
-            self.log.debug("Parsing C++ file %s", sf.path)
+            self.log.debug("Parsing Python file %s", sf.path)
             if parser.parse(sf.path) is None:
                 self.log.warning("no compile commands for " + sf.path)
         node.source_tree = parser.global_scope
@@ -1142,7 +1173,7 @@ class NodeExtractor(LoggingObject):
 
     def _extract_primitives(self):
         self.roscpp_extractor = RoscppExtractor(self.package, self.workspace)
-        self.rospy_extractor = RospyExtractor(self.package)
+        self.rospy_extractor = RospyExtractor(self.package, self.workspace)
 
         for i in xrange(len(self.package.nodes)):
             node = self.package.nodes[i]
@@ -1162,6 +1193,7 @@ class NodeExtractor(LoggingObject):
             node.client = []
             node.read_param = []
             node.write_param = []
+
             if not node.source_files:
                 self.log.warning("no source files for node " + node.id)
             if node.language == "cpp" and CppAstParser is not None:
