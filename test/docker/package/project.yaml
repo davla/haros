@@ -31,3 +31,27 @@ rules:
         tags:
             - ros-comm
             - custom-filter-tag
+
+    advertise_info:
+        description: Information about calls to advertise
+        name: Advertise info
+
+        query: >-
+          for def in <nodes/publishers>
+          where def.topic_name in <nodes.subscribers/topic_name>
+          return
+            def.source_location, def.topic.name
+
+        scope: configuration
+        tags:
+            - ros-comm
+            - custom-filter-tag
+
+packages:
+  - pid
+
+configurations:
+  massive-analysis:
+    - pid/launch/servo_sim.launch
+    - pid/launch/differential_drive_sim.launch
+    - pid/launch/sim_time.launch
