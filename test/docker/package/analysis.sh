@@ -2,11 +2,11 @@
 
 source /home/ros/catkin_ws/devel/setup.bash
 
-RESULTS_FILE="$HOME/results/${PACKAGE/\//--}.json"
+RESULTS_FILE="${1:-$HOME/results/${PACKAGE/\//--}.json}"
 
 cd "$HOME/haros" || exit 1
 
-python -m haros --debug analyse -n
+python -m haros --debug analyse -n --no-cache
 python -m haros --debug export -p massive-analysis "$HOME/.haros/export"
 
 if cd "$HOME/.haros/export/massive-analysis/compliance" &> /dev/null; then
