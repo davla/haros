@@ -14,7 +14,9 @@ function build-if-not-in-hub {
 
     if [[ "$FORCE_BUILD" == 'true' ]] || ! docker-compose pull "$SERVICE"; then
         if docker-compose build "$SERVICE"; then
-            docker-compose push "$SERVICE"
+            while ! docker-compose push "$SERVICE"; do
+                sleep 5s
+            done
         else
             false
         fi
