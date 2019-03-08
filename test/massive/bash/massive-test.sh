@@ -121,7 +121,7 @@ shopt -s expand_aliases
 
 alias select-packages='cat'
 # shellcheck disable=2139
-alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\"\
+alias get-packages="pipenv run python \"$BASE_DIR/py/ros-packages.py\" \
 \"\$ROS_DISTRO\" --names --urls"
 
 while getopts 'b:df:Hh:r:p:' OPTION; do
