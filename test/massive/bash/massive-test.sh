@@ -87,6 +87,7 @@ function rm-images {
     local PATTERN="$1"
 
     yes | docker container prune
+    yes | docker volume prune
 
     docker image ls | grep -P "$PATTERN" | grep -v 'haros-deps' \
         | awk '{print $1 ":" $2}' | xargs docker image rm
