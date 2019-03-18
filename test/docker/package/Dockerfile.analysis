@@ -30,20 +30,8 @@ COPY --chown=ros:ros ./configs.yaml /home/ros/.haros/configs.yaml
 COPY --chown=ros:ros ./project.yaml /home/ros/.haros/index.yaml
 
 # Dynamic generation of package configuration: all launch files are added
-RUN echo "\n\
-packages:\n\
-  - $PACKAGE\n\
-\n\
-configurations:\n\
-  massive-analysis:" >> /home/ros/.haros/index.yaml
-RUN bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
-    && source /home/ros/catkin_ws/devel/setup.bash \
-    && rospack find $PACKAGE_NAME | xargs -i find '{}' -name '*.launch' \
-        -printf \"    - $PACKAGE/%P\n\" >> ./launch_files.txt \
-    && { test -s ./launch_files.txt \
-        && cat ./launch_files.txt >> /home/ros/.haros/index.yaml \
-        || echo '    []' >> /home/ros/.haros/index.yaml; } \
-    && rm ./launch_files.txt"
+COPY --chown=ros:ros ./make-haros-config.sh ./make-haros-config.sh
+RUN bash make-haros-config.sh
 
 # Running the analysis
 COPY --chown=ros:ros ./analysis.sh ./analysis.sh
