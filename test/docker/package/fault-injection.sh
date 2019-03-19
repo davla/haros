@@ -13,7 +13,13 @@ jq -r ".queries[]
     | select(.[-1] != \"?\")
     | [.[1], .[2], .[-1]] | join(\" \")" "$INPUT_FILE" \
     | while read FILE LINE NAME; do
-        FILE="$HOME/catkin_ws/src/$FILE"
+        FILE="$HOME/catkin_ws/src/$PACKAGE/$FILE"
+        [[ -f "$FILE" ]] || {
+            FILE="$HOME/catkin_ws/src/$FILE"
+            [[ -f "$FILE" ]] \
+                || FILE="$(find "$HOME/catkin_ws/src/" -path "*/$FILE")"
+        }
+
         sed -i "${LINE}s/$NAME/${NAME:1}/" "$FILE"
     done
 
