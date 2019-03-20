@@ -55,22 +55,26 @@ mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
 jq ".fault_injection |= $FAULT_INJECTION" "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
 rm "$OUTPUT_FILE.old"
 
-jq -r '.fault_injection.names[]' "$OUTPUT_FILE" | sort -u > mangled-names.txt
-UNDETECTED="$(diff --changed-group-format='%<' --unchanged-group-format='' \
-    mangled-names.txt <(jq -r '.queries[]
-                                   | select(.rule | endswith("match_topics"))
-                                   | .comment[13:]' "$OUTPUT_FILE" \
-                            | grep -f mangled-names.txt | sort -u))"
-rm mangled-names.txt
+[[ -n "${NOT_FOUND[*]}" || -n "${NAMES[*]}" ]] && {
+    jq -r '.fault_injection.names[]' "$OUTPUT_FILE" | sort -u \
+        > mangled-names.txt
+    UNDETECTED="$(diff --changed-group-format='%<' \
+        --unchanged-group-format='' mangled-names.txt \
+            <(jq -r '.queries[]
+                         | select(.rule | endswith("match_topics"))
+                         | .comment[13:]' "$OUTPUT_FILE" \
+                  | grep -f mangled-names.txt | sort -u))"
+    rm mangled-names.txt
 
-[[ -n "$UNDETECTED" ]] && {
-    ALL_UNDETECTED="\"${UNDETECTED[0]}\""
-    for NAME in "${UNDETECTED[@]:1}"; do
-        ALL_UNDETECTED="\"$NAME\", $ALL_UNDETECTED"
-    done
+    [[ -n "$UNDETECTED" ]] && {
+        ALL_UNDETECTED="\"${UNDETECTED[0]}\""
+        for NAME in "${UNDETECTED[@]:1}"; do
+            ALL_UNDETECTED="\"$NAME\", $ALL_UNDETECTED"
+        done
 
-    mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
-    jq ".fault_injection.undetected |= [$ALL_UNDETECTED]" "$OUTPUT_FILE.old" \
-        > "$OUTPUT_FILE"
-    rm "$OUTPUT_FILE.old"
+        mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
+        jq ".fault_injection.undetected |= [$ALL_UNDETECTED]" \
+            "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
+        rm "$OUTPUT_FILE.old"
+    }
 }
