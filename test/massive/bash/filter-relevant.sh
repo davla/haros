@@ -68,15 +68,25 @@ grep_client_api() {
     local NH=$(grep 'NodeHandle' -R "$SRC_ROOT" | wc -l)
     local NH_ARGS=$(grep -P 'NodeHandle\s+[_a-zA-Z][_a-zA-Z0-9]*\(' \
         -R "$SRC_ROOT" | wc -l)
+
     local BARE_PUB=$(grep -P 'Publisher\s+[_a-zA-Z][_a-zA-Z0-9]*\(' \
         -R "$SRC_ROOT" | wc -l)
     local PUBLICATION=$(grep 'Publication' -R "$SRC_ROOT" | wc -l)
     local TOPICMANAGER=$(grep 'TopicManager' -R "$SRC_ROOT" | wc -l)
     local LONG_ONE=$(grep 'SingleSubscriberPublisher' -R "$SRC_ROOT" \
         | wc -l)
+
+    local SERVICE_CALL="$(grep -P 'service::call' -R "$SRC_ROOT" | wc -l)"
+    local SERVICE_CLIENT="$(grep -P '\.serviceClient' -R "$SRC_ROOT" | wc -l)"
+    local ADVERTISE_SERVICE="$(grep -P '\.advertiseService' -R "$SRC_ROOT" \
+        | wc -l)"
+    local SERVICE_SERVER="$(grep -P \
+        'ServiceServer\s+[_a-zA-Z][_a-zA-Z0-9]*\(' -R "$SRC_ROOT" | wc -l)"
+
     local SUBSCRIBER=$(grep 'Subscriber' -R "$SRC_ROOT" | wc -l)
     local PUBLISHER=$(grep 'Publisher' -R "$SRC_ROOT" | wc -l)
-
+    local SERVICE=$(grep 'Service' -R "$SRC_ROOT" | wc -l)
+    local SERVICE_PROXY=$(grep 'ServiceProxy' -R "$SRC_ROOT" | wc -l)
 
     local ADVERTISE="$(grep -P '\.advertise' -R "$SRC_ROOT" | wc -l)"
     local PUBLISH="$(grep -P '\.publish' -R "$SRC_ROOT" | wc -l)"
@@ -94,11 +104,19 @@ grep_client_api() {
     "SingleSubscriberPublisher": $LONG_ONE,
     "Subscriber": $SUBSCRIBER,
     "Publisher": $PUBLISHER,
+    "Service": $SERVICE,
+    "ServiceProxy": $SERVICE_PROXY,
+    "service_call": $SERVICE_CALL,
+    "serviceClient": $SERVICE_CLIENT,
+    "advertiseService": $ADVERTISE_SERVICE,
+    "ServiceServer": $SERVICE_SERVER,
     "advertise": $ADVERTISE,
     "publish": $PUBLISH,
     "subscribe": $SUBSCRIBE,
     "launch": $LAUNCH,
-    "total": $(( ADVERTISE + SUBSCRIBE + PUBLISHER + SUBSCRIBER ))
+    "total": $(( ADVERTISE + SUBSCRIBE + PUBLISHER + SUBSCRIBER \
+            + ADVERTISE_SERVICE + SERVICE_CALL + SERVICE_CLIENT \
+                + SERVICE + SERVICE_PROXY ))
 }
 SUMMARYEOF
 }
