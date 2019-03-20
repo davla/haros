@@ -7,9 +7,9 @@ FAULT_INJECTION='"No topics to rename"'
 NAMES=()
 NOT_FOUND=()
 
-# bash analysis.sh "$INPUT_FILE"
+bash analysis.sh "$INPUT_FILE"
 
-while read FILE LINE NAME; do
+while read FILE LINE NAME FULL_NAME; do
     FILE="$HOME/catkin_ws/src/$PACKAGE/$FILE"
     [[ -f "$FILE" ]] || {
         FILE="$HOME/catkin_ws/src/$FILE"
@@ -21,16 +21,16 @@ while read FILE LINE NAME; do
         NOT_FOUND+=("$FILE")
         continue
     }
-    NAMES+=("$NAME")
+    NAMES+=("$FULL_NAME")
 
-    # sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE"
+    sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE"
 done < <(jq -r ".queries[]
     | select(.rule | endswith(\"info\"))
     | .comment[15:-1]
     | gsub(\",\"; \"\") | gsub(\":\"; \" \")
     | split(\" \")
     | select(.[-1] != \"?\")
-    | [.[1], .[2], .[-1]] | join(\" \")" "$INPUT_FILE")
+    | [.[1], .[2], .[-2], .[-1]] | join(\" \")" "$INPUT_FILE")
 
 bash analysis.sh "$OUTPUT_FILE"
 
@@ -45,7 +45,6 @@ bash analysis.sh "$OUTPUT_FILE"
         ALL_FILES="\"$FILE\", $ALL_FILES"
     done
 
-
     FAULT_INJECTION="{\
     \"names\": [$ALL_NAMES],\
     \"not_found\": [$ALL_FILES]\
@@ -55,3 +54,23 @@ bash analysis.sh "$OUTPUT_FILE"
 mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
 jq ".fault_injection |= $FAULT_INJECTION" "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
 rm "$OUTPUT_FILE.old"
+
+jq -r '.fault_injection.names[]' "$OUTPUT_FILE" | sort -u > mangled-names.txt
+UNDETECTED="$(diff --changed-group-format='%<' --unchanged-group-format='' \
+    mangled-names.txt <(jq -r '.queries[]
+                                   | select(.rule | endswith("match_topics"))
+                                   | .comment[13:]' "$OUTPUT_FILE" \
+                            | grep -f mangled-names.txt | sort -u))"
+rm mangled-names.txt
+
+[[ -n "$UNDETECTED" ]] && {
+    ALL_UNDETECTED="\"${UNDETECTED[0]}\""
+    for NAME in "${UNDETECTED[@]:1}"; do
+        ALL_UNDETECTED="\"$NAME\", $ALL_UNDETECTED"
+    done
+
+    mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
+    jq ".fault_injection.undetected |= [$ALL_UNDETECTED]" "$OUTPUT_FILE.old" \
+        > "$OUTPUT_FILE"
+    rm "$OUTPUT_FILE.old"
+}
