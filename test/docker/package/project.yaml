@@ -3,7 +3,7 @@
 
 project: massive-analysis
 rules:
-    topics:
+    comm:
       description: Displays available topics
       name: Available topics
 
@@ -11,7 +11,11 @@ rules:
         return
           'topicNames': <topics/name>,
           'publishers': <nodes/publishers/topic_name>,
-          'subscribers': <nodes/subscribers/topic_name>
+          'subscribers': <nodes/subscribers/topic_name>,
+
+          'serviceNames': <services/name>,
+          'servers': <nodes/servers/topic_name>,
+          'clients': <nodes/clients/topic_name>
 
       scope: configuration
       tags:
@@ -29,8 +33,8 @@ rules:
 
         scope: configuration
         tags:
-            - ros-comm
-            - custom-filter-tag
+            - match
+            - topics
 
     advertise_info:
         description: Information about calls to advertise
@@ -44,5 +48,54 @@ rules:
 
         scope: configuration
         tags:
-            - ros-comm
-            - custom-filter-tag
+          - info
+          - topics
+
+    match_services:
+        description: All subscribd services must be defined as well
+        name: Used services must be defined
+
+        query: >-
+          for use in <nodes/clients/topic_name>
+          where use not in <nodes/servers/topic_name>
+          return use
+
+        scope: configuration
+        tags:
+          - match
+          - services
+
+    service_info:
+        description: Information about calls to advertise
+        name: Advertise info
+
+        query: >-
+          for def in <nodes/servers>
+          where def.topic_name in <nodes/clients/topic_name>
+          return
+            def.source_location, def.service.name, def.topic_name
+
+        scope: configuration
+        tags:
+          - info
+          - topics
+
+packages:
+  - capabilities
+configurations:
+  capabilities:
+    - capabilities/test/rostest/test_server/no_default_provider/no_default_provider_pkg/providers/launch/minimal2.launch
+    - capabilities/test/rostest/test_server/no_default_provider/no_default_provider_pkg/providers/launch/minimal.launch
+    - capabilities/test/rostest/test_server/dependent_capabilities/differential_mobile_base_capability/providers/launch/faux_differential_mobile_base.launch
+    - capabilities/test/rostest/test_server/dependent_capabilities/navigation_capability/providers/launch/faux_navigation.launch
+    - capabilities/test/unit/discovery_workspaces/duplicate_names/pkg_with_duplicate_names/providers/launch/minimal.launch
+    - capabilities/test/unit/discovery_workspaces/missing_interface/missing_interface_pkg/providers/launch/minimal.launch
+    - capabilities/test/unit/discovery_workspaces/dependent_capabilities/differential_mobile_base_capability/providers/launch/faux_differential_mobile_base.launch
+    - capabilities/test/unit/discovery_workspaces/dependent_capabilities/navigation_capability/providers/launch/faux_navigation.launch
+    - capabilities/test/unit/discovery_workspaces/minimal/minimal_pkg/providers/launch/minimal.launch
+    - capabilities/test/unit/discovery_workspaces/minimal/minimal_pkg/providers/launch/slow_to_die.launch
+    - capabilities/test/unit/discovery_workspaces/invalid_specs/pkg_with_invalid_specs/providers/launch/minimal.launch
+    - capabilities/test/unit/discovery_workspaces/duplicate_names_semantic/pkg_with_duplicate_names/providers/launch/minimal.launch
+    - capabilities/test/unit/discovery_workspaces/remapping_examples/robot_base_pkg/providers/launch/robot_base.launch
+    - capabilities/src/capabilities/capability_server_nodelet_manager.launch
+    - capabilities/launch/demo.launch

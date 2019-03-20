@@ -79,10 +79,10 @@ services:
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: app_manager
-      PACKAGE_HASH: 'a7d83ff'
+      PACKAGE: capabilities
+      PACKAGE_HASH: '5dae913'
 
-    image: "davla/thesis:haros-795dcdb-bonsai-3d2b1bb-app_manager-a7d83ff"
+    image: "davla/thesis:haros-ac3de66-bonsai-85baf3d-capabilities-5dae913"
 
     volumes:
       - type: bind
