@@ -40,7 +40,7 @@ rules:
           for def in <nodes/publishers>
           where def.topic_name in <nodes/subscribers/topic_name>
           return
-            def.source_location, def.topic.name
+            def.source_location, def.topic.name, def.topic_name
 
         scope: configuration
         tags:
