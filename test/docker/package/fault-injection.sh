@@ -7,6 +7,16 @@ FAULT_INJECTION='"No topics to rename"'
 NAMES=()
 NOT_FOUND=()
 
+function change_name {
+    local FILE="$1"
+    local LINE="$2"
+    local NAME="$3"
+
+    sed -n "$LINE" "$FILE" | grep -q "$NAME" \
+        && sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE" \
+        || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
+}
+
 bash analysis.sh "$INPUT_FILE"
 
 while read FILE LINE NAME FULL_NAME; do
@@ -23,7 +33,7 @@ while read FILE LINE NAME FULL_NAME; do
     }
     NAMES+=("$FULL_NAME")
 
-    sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE"
+    change_name "$FILE" "$LINE" "$NAME"
 done < <(jq -r ".queries[]
     | select(.rule | endswith(\"info\"))
     | .comment[15:-1]
