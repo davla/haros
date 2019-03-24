@@ -39,7 +39,7 @@ done < <(jq -r ".queries[]
     | .comment[15:-1]
     | gsub(\",\"; \"\") | gsub(\":\"; \" \")
     | split(\" \")
-    | select(.[-1] != \"?\")
+    | select(.[-2] != \"?\")
     | [.[1], .[2], .[-2], .[-1]] | join(\" \")" "$INPUT_FILE")
 
 bash analysis.sh "$OUTPUT_FILE"
