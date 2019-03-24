@@ -85,7 +85,7 @@ grep_client_api() {
 
     local SUBSCRIBER=$(grep 'Subscriber' -R "$SRC_ROOT" | wc -l)
     local PUBLISHER=$(grep 'Publisher' -R "$SRC_ROOT" | wc -l)
-    local SERVICE=$(grep 'Service' -R "$SRC_ROOT" | wc -l)
+    local SERVICE=$(grep -P '\bService\b' -R "$SRC_ROOT" | wc -l)
     local SERVICE_PROXY=$(grep 'ServiceProxy' -R "$SRC_ROOT" | wc -l)
 
     local ADVERTISE="$(grep -P '\.advertise' -R "$SRC_ROOT" | wc -l)"
