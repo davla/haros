@@ -51,6 +51,38 @@ rules:
           - info
           - topics
 
+    topic_launch_info:
+        description: Information about publishers launch files
+        name: Launch info
+
+        query: >-
+          for def in <nodes/publishers>
+          let node = def.node
+          let launch = node.launch
+          where def.topic_name in <nodes/subscribers/topic_name>
+          return
+            node.name, launch
+
+        scope: configuration
+        tags:
+          - info
+          - topics
+
+    subscribe_info:
+        description: Information about calls to subscribe
+        name: subscribe info
+
+        query: >-
+          for use in <nodes/subscribers>
+          where use.topic_name in <nodes/publishers/topic_name>
+          return
+            use.source_location, use.topic.name, use.topic_name
+
+        scope: configuration
+        tags:
+          - info
+          - topics
+
     match_services:
         description: All subscribd services must be defined as well
         name: Used services must be defined
@@ -66,8 +98,8 @@ rules:
           - services
 
     service_info:
-        description: Information about calls to advertise
-        name: Advertise info
+        description: Information about services definitions
+        name: Services info
 
         query: >-
           for def in <nodes/servers>
@@ -78,4 +110,36 @@ rules:
         scope: configuration
         tags:
           - info
-          - topics
+          - services
+
+    service_launch_info:
+        description: Information about servers launch files
+        name: Launch info
+
+        query: >-
+          for def in <nodes/servers>
+          let node = def.node
+          let launch = node.launch
+          where def.topic_name in <nodes/clients/topic_name>
+          return
+            node.name, launch
+
+        scope: configuration
+        tags:
+          - info
+          - services
+
+    client_info:
+        description: Information about calls to subscribe
+        name: subscribe info
+
+        query: >-
+          for use in <nodes/clients>
+          where use.topic_name in <nodes/servers/topic_name>
+          return
+            use.source_location, use.topic.name, use.topic_name
+
+        scope: configuration
+        tags:
+          - info
+          - services
