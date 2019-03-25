@@ -1,26 +1,83 @@
 #!/usr/bin/env bash
 
+###############################################################################
+#                                                                             #
+#                            Input processing                                 #
+#                                                                             #
+###############################################################################
+
 INPUT_FILE="$HOME/results/${PACKAGE/\//--}.json"
 OUTPUT_FILE="$HOME/results/${PACKAGE/\//--}-faulted.json"
 
-FAULT_INJECTION='"No topics to rename"'
-NAMES=()
-NOT_FOUND=()
-EDITED_FILES=()
+###############################################################################
+#                                                                             #
+#                            Load/Store files                                 #
+#                                                                             #
+###############################################################################
 
-function change_name {
-    local FILE="$1"
-    local LINE="$2"
-    local NAME="$3"
+STORE_DIR=$(mktemp -d)
 
-    sed -n "${LINE}p" "$FILE" | grep -q "$NAME" \
-        && sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE" \
-        || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
+function store_file {
+    local FILE
+    FILE="$(readlink -f "$1")"
+
+    cp "${FILE//\//--}" "$STORE_DIR"
 }
 
-bash analysis.sh "$INPUT_FILE"
-exit
-while read FILE LINE NAME FULL_NAME; do
+function load_file {
+    local FILE="$1"
+    local DEST="${1//--/\/}"
+
+    cp "$STORE_DIR/$FILE" "$DEST"
+}
+
+function edited_file {
+    [[ -f "${1//\//--}" ]]
+}
+
+function load_all {
+    for FILE in $STORE_DIR/*; do
+        load_file "$FILE"
+    done
+}
+
+###############################################################################
+#                                                                             #
+#                              Data getters                                   #
+#                                                                             #
+###############################################################################
+
+function names_in_calls {
+    local RULE_NAME="$1"
+    local JSON_FILE="$2"
+
+    jq -r ".queries[]
+        | select(.rule == \"user:$RULE_NAME\"))
+        | .comment[15:-1]
+        | gsub(\",\"; \"\") | gsub(\":\"; \" \")
+        | split(\" \")
+        | select(.[-2] != \"?\")
+        | [.[1], .[2], .[-2], .[-1]] | join(\" \")" "$JSON_FILE"
+}
+
+function unmatched_name {
+    local RULE_NAME="$1"
+    local JSON_FILE="$2"
+
+    jq -r ".queries[]
+        | select(.rule == \"user:$RULE_NAME\")
+        | .comment[13:]" "$JSON_FILE"
+}
+
+###############################################################################
+#                                                                             #
+#                             Misc functions                                  #
+#                                                                             #
+###############################################################################
+
+function find_file {
+    local FILE="$1"
+
     FILE_PATH="$HOME/catkin_ws/src/$PACKAGE/$FILE"
     [[ -f "$FILE_PATH" ]] || {
         FILE_PATH="$HOME/catkin_ws/src/$FILE"
@@ -28,68 +85,115 @@ while read FILE LINE NAME FULL_NAME; do
             || FILE_PATH="$(find "$HOME/catkin_ws/src/" -path "*/$FILE")"
     }
 
-    [[ -z "$FILE_PATH" ]] && {
-        NOT_FOUND+=("$FILE_PATH")
-        continue
-    }
-
-    NAMES+=("$FULL_NAME")
-
-    [[ "${EDITED_FILES[*]}" =~ .*$FILE-$LINE.* ]] && continue
-    EDITED_FILES+=("$FILE-$LINE")
-
-    change_name "$FILE_PATH" "$LINE" "$NAME"
-done < <(jq -r ".queries[]
-    | select(.rule | endswith(\"info\"))
-    | .comment[15:-1]
-    | gsub(\",\"; \"\") | gsub(\":\"; \" \")
-    | split(\" \")
-    | select(.[-2] != \"?\")
-    | [.[1], .[2], .[-2], .[-1]] | join(\" \")" "$INPUT_FILE")
-
-bash analysis.sh "$OUTPUT_FILE"
-
-[[ -n "${NOT_FOUND[*]}" || -n "${NAMES[*]}" ]] && {
-    ALL_NAMES="\"${NAMES[0]}\""
-    for NAME in "${NAMES[@]:1}"; do
-        ALL_NAMES="$ALL_NAMES, \"$NAME\""
-    done
-
-    ALL_FILES="\"${NOT_FOUND[0]}\""
-    for FILE in "${NOT_FOUND[@]:1}"; do
-        ALL_FILES="\"$FILE\", $ALL_FILES"
-    done
-
-    FAULT_INJECTION="{\
-    \"names\": [$ALL_NAMES],\
-    \"not_found\": [$ALL_FILES]\
-}"
+    echo "$FILE_PATH"
 }
 
-mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
-jq ".fault_injection |= $FAULT_INJECTION" "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
-rm "$OUTPUT_FILE.old"
+function find_undetected {
+    local INJECTION_NAME="$1"
+    local MATCH_RULE="$2"
+    local JSON_IN="$3"
+    local JSON_OUT="$4"
 
-[[ -n "${NOT_FOUND[*]}" || -n "${NAMES[*]}" ]] && {
-    jq -r '.fault_injection.names[]' "$OUTPUT_FILE" | sort -u \
-        > mangled-names.txt
+    local TMP
+    TMP=$(mktemp)
+    jq -r ".fault_injection.$INJECTION_NAME.names[]" "$JSON_OUT" \
+        | sort -u > "$TMP"
     UNDETECTED="$(diff --changed-group-format='%<' \
-        --unchanged-group-format='' mangled-names.txt \
-            <(jq -r '.queries[]
-                         | select(.rule | endswith("match_topics"))
-                         | .comment[13:]' "$OUTPUT_FILE" \
-                  | grep -f mangled-names.txt | sort -u))"
-    rm mangled-names.txt
+            --unchanged-group-format='' \
+        "$TMP" \
+        <(unmatched_name "$MATCH_RULE" "$JSON_IN" \
+            | grep -f "$TMP" | sort -u))"
+    rm "$TMP"
 
-    [[ -n "$UNDETECTED" ]] && {
-        ALL_UNDETECTED="\"${UNDETECTED[0]}\""
-        for NAME in "${UNDETECTED[@]:1}"; do
-            ALL_UNDETECTED="\"$NAME\", $ALL_UNDETECTED"
-        done
-
-        mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
-        jq ".fault_injection.undetected |= [$ALL_UNDETECTED]" \
-            "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
-        rm "$OUTPUT_FILE.old"
-    }
+    mv "$JSON_OUT" "$JSON_OUT.old"
+    jq ".fault_injection.$INJECTION_KEY.undetected |=
+        [$(concat "${UNDETECTED[*]}")]" "$JSON_OUT.old" > "$JSON_OUT"
+    rm "$JSON_OUT.old"
 }
+
+function concat {
+    local SOURCE="$1"
+
+    [[ "${#SOURCE[*]}" -eq 0 ]] && echo -n ''
+
+    echo -n "\"${SOURCE[0]}\""
+    for ITEM in "${SOURCE[@]:1}"; do
+        echo -n ", \"$ITEM\""
+    done
+}
+
+###############################################################################
+#                                                                             #
+#                            Fault injections                                 #
+#                                                                             #
+###############################################################################
+
+declare -A INJECTIONS
+INJECTIONS[wrong_publisher]='advertise_info match_topics'
+INJECTIONS[wrong_subscriber]='subscribe_info match_topics'
+INJECTIONS[wrong_service]='service_info match_services'
+INJECTIONS[wrong_client]='client_info match_services'
+
+function change_name {
+    local FILE="$1"
+    local LINE="$2"
+    local NAME="$3"
+
+    store_file "$FILE"
+
+    sed -n "${LINE}p" "$FILE" | grep -q "$NAME" \
+        && sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE" \
+        || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
+}
+
+function change_ns {
+    true
+}
+
+function remove_node {
+    true
+}
+
+###############################################################################
+#                                                                             #
+#                              Doing things                                   #
+#                                                                             #
+###############################################################################
+
+bash analysis.sh "$INPUT_FILE"
+jq -n '{"fault_injection": {}}' > "$OUTPUT_FILE"
+
+for INJECTION_NAME in "${!INJECTIONS[@]}"; do
+    read RULE MATCH_RULE < <(echo "${INJECTIONS[$INJECTION_NAME]}")
+
+    THIS_OUT="${OUTPUT_FILE%.json}.$INJECTION_NAME.json"
+    NAMES=()
+    FILES_NOT_FOUND=()
+
+    while read FILE LINE NAME FULL_NAME; do
+        FILE_PATH="$(find_file "$FILE")"
+        [[ -z "$FILE_PATH" ]] && {
+            FILES_NOT_FOUND+=("$FILE_PATH")
+            continue
+        }
+
+        NAMES+=("$FULL_NAME")
+
+        edited_file "$FILE_PATH" && continue
+
+        change_name "$FILE_PATH" "$LINE" "$NAME"
+    done < <(names_in_calls "$RULE" "$INPUT_FILE")
+
+    bash analysis.sh "$THIS_OUT"
+
+    load_all
+
+    mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
+    jq ".fault_injection.$INJECTION_NAME |= {\
+        \"names\": [$(concat "${NAMES[*]}")]\
+        \"files_not_found\": [$(concat "${FILES_NOT_FOUND[*]}")]\
+    }" "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
+    rm "$OUTPUT_FILE.old"
+
+    find_undetected "$INJECTION_NAME" "$MATCH_RULE" "$THIS_OUT" "$OUTPUT_FILE"
+done
