@@ -6,6 +6,7 @@ OUTPUT_FILE="$HOME/results/${PACKAGE/\//--}-faulted.json"
 FAULT_INJECTION='"No topics to rename"'
 NAMES=()
 NOT_FOUND=()
+EDITED_FILES=()
 
 function change_name {
     local FILE="$1"
@@ -17,8 +18,8 @@ function change_name {
         || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
 }
 
-# bash analysis.sh "$INPUT_FILE"
-
+bash analysis.sh "$INPUT_FILE"
+exit
 while read FILE LINE NAME FULL_NAME; do
     FILE_PATH="$HOME/catkin_ws/src/$PACKAGE/$FILE"
     [[ -f "$FILE_PATH" ]] || {
@@ -31,7 +32,11 @@ while read FILE LINE NAME FULL_NAME; do
         NOT_FOUND+=("$FILE_PATH")
         continue
     }
+
     NAMES+=("$FULL_NAME")
+
+    [[ "${EDITED_FILES[*]}" =~ .*$FILE-$LINE.* ]] && continue
+    EDITED_FILES+=("$FILE-$LINE")
 
     change_name "$FILE_PATH" "$LINE" "$NAME"
 done < <(jq -r ".queries[]
