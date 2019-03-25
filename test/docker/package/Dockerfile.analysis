@@ -36,4 +36,4 @@ RUN bash make-haros-config.sh
 # Running the analysis
 COPY --chown=ros:ros ./analysis.sh ./analysis.sh
 COPY --chown=ros:ros ./fault-injection.sh ./fault-injection.sh
-CMD ["bash", "fault-injection.sh"]
+CMD ["bash", "analysis.sh"]
