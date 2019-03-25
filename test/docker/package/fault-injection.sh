@@ -12,28 +12,28 @@ function change_name {
     local LINE="$2"
     local NAME="$3"
 
-    sed -n "$LINE" "$FILE" | grep -q "$NAME" \
+    sed -n "${LINE}p" "$FILE" | grep -q "$NAME" \
         && sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE" \
         || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
 }
 
-bash analysis.sh "$INPUT_FILE"
+# bash analysis.sh "$INPUT_FILE"
 
 while read FILE LINE NAME FULL_NAME; do
-    FILE="$HOME/catkin_ws/src/$PACKAGE/$FILE"
-    [[ -f "$FILE" ]] || {
-        FILE="$HOME/catkin_ws/src/$FILE"
-        [[ -f "$FILE" ]] \
-            || FILE="$(find "$HOME/catkin_ws/src/" -path "*/$FILE")"
+    FILE_PATH="$HOME/catkin_ws/src/$PACKAGE/$FILE"
+    [[ -f "$FILE_PATH" ]] || {
+        FILE_PATH="$HOME/catkin_ws/src/$FILE"
+        [[ -f "$FILE_PATH" ]] \
+            || FILE_PATH="$(find "$HOME/catkin_ws/src/" -path "*/$FILE")"
     }
 
-    [[ -z "$FILE" ]] && {
-        NOT_FOUND+=("$FILE")
+    [[ -z "$FILE_PATH" ]] && {
+        NOT_FOUND+=("$FILE_PATH")
         continue
     }
     NAMES+=("$FULL_NAME")
 
-    change_name "$FILE" "$LINE" "$NAME"
+    change_name "$FILE_PATH" "$LINE" "$NAME"
 done < <(jq -r ".queries[]
     | select(.rule | endswith(\"info\"))
     | .comment[15:-1]
