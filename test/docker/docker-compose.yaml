@@ -79,10 +79,10 @@ services:
   dev:
     command: ["bash"]
     environment:
-      PACKAGE: capabilities
-      PACKAGE_HASH: '5dae913'
+      PACKAGE: mrpt_navigation
+      PACKAGE_HASH: '6f8415d'
 
-    image: "davla/thesis:haros-ac3de66-bonsai-85baf3d-capabilities-5dae913"
+    image: 'davla/thesis:haros-f7e71c3-bonsai-ad180b1-mrpt_navigation-6f8415d'
 
     volumes:
       - type: bind
