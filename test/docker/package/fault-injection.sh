@@ -129,6 +129,28 @@ function remove_node {
     true
 }
 
+function make_name_wrong_publisher {
+    echo $FULL_NAME
+}
+
+function make_name_wrong_service {
+    echo $FULL_NAME
+}
+
+function make_name_wrong_subscriber {
+    local FULL_NAME="$1"
+    local NAME="$2"
+
+    echo "${FULL_NAME%$NAME}${NAME:1}"
+}
+
+function make_name_wrong_client {
+    local FULL_NAME="$1"
+    local NAME="$2"
+
+    echo "${FULL_NAME%$NAME}${NAME:1}"
+}
+
 ###############################################################################
 #                                                                             #
 #                              Doing things                                   #
@@ -152,7 +174,7 @@ for INJECTION_NAME in "${!INJECTIONS[@]}"; do
             continue
         }
 
-        NAMES+=("$FULL_NAME")
+        NAMES+=("$(make_name_"$INJECTION_NAME" "$FULL_NAME" "$NAME")")
 
         edited_file "$FILE_PATH" && continue
 
