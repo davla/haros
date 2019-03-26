@@ -137,7 +137,7 @@ rules:
           for use in <nodes/clients>
           where use.topic_name in <nodes/servers/topic_name>
           return
-            use.source_location, use.topic.name, use.topic_name
+            use.source_location, use.service.name, use.topic_name
 
         scope: configuration
         tags:
