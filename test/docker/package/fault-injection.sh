@@ -52,7 +52,7 @@ function names_in_calls {
     local JSON_FILE="$2"
 
     jq -r ".queries[]
-        | select(.rule == \"user:$RULE_NAME\"))
+        | select(.rule == \"user:$RULE_NAME\")
         | .comment[15:-1]
         | gsub(\",\"; \"\") | gsub(\":\"; \" \")
         | split(\" \")
@@ -102,22 +102,31 @@ function find_undetected {
             --unchanged-group-format='' \
         "$TMP" \
         <(unmatched_name "$MATCH_RULE" "$JSON_IN" \
-            | grep -f "$TMP" | sort -u))"
+            | grep -f "$TMP" | sort -u) | xargs)"
     rm "$TMP"
 
     mv "$JSON_OUT" "$JSON_OUT.old"
-    jq ".fault_injection.$INJECTION_KEY.undetected |=
-        [$(concat "${UNDETECTED[*]}")]" "$JSON_OUT.old" > "$JSON_OUT"
+    jq ".fault_injection.$INJECTION_NAME.undetected |=
+        [$(concat $UNDETECTED)]" "$JSON_OUT.old" > "$JSON_OUT"
     rm "$JSON_OUT.old"
 }
 
+function edited_file {
+    local FILE="$1"
+    local FILE_NAME="$(basename "$FILE")"
+    local DIR_NAME="$(dirname "$FILE")"
+
+    git -C "$DIR_NAME" status -s | grep -q "$FILE_NAME"
+}
+
 function concat {
-    local SOURCE="$1"
+    [[ $# -eq 0 ]] && {
+        echo -n ''
+        return
+    }
 
-    [[ "${#SOURCE[*]}" -eq 0 ]] && echo -n ''
-
-    echo -n "\"${SOURCE[0]}\""
-    for ITEM in "${SOURCE[@]:1}"; do
+    echo -n "\"$1\""
+    for ITEM in "${@:2}"; do
         echo -n ", \"$ITEM\""
     done
 }
@@ -190,8 +199,8 @@ for INJECTION_NAME in "${!INJECTIONS[@]}"; do
 
     mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
     jq ".fault_injection.$INJECTION_NAME |= {\
-        \"names\": [$(concat "${NAMES[*]}")]\
-        \"files_not_found\": [$(concat "${FILES_NOT_FOUND[*]}")]\
+        \"names\": [$(concat "${NAMES[@]}")],\
+        \"files_not_found\": [$(concat "${FILES_NOT_FOUND[@]}")]\
     }" "$OUTPUT_FILE.old" > "$OUTPUT_FILE"
     rm "$OUTPUT_FILE.old"
 
