@@ -11,38 +11,6 @@ OUTPUT_FILE="$HOME/results/${PACKAGE/\//--}-faulted.json"
 
 ###############################################################################
 #                                                                             #
-#                            Load/Store files                                 #
-#                                                                             #
-###############################################################################
-
-STORE_DIR=$(mktemp -d)
-
-function store_file {
-    local FILE
-    FILE="$(readlink -f "$1")"
-
-    cp "${FILE//\//--}" "$STORE_DIR"
-}
-
-function load_file {
-    local FILE="$1"
-    local DEST="${1//--/\/}"
-
-    cp "$STORE_DIR/$FILE" "$DEST"
-}
-
-function edited_file {
-    [[ -f "${1//\//--}" ]]
-}
-
-function load_all {
-    for FILE in $STORE_DIR/*; do
-        load_file "$FILE"
-    done
-}
-
-###############################################################################
-#                                                                             #
 #                              Data getters                                   #
 #                                                                             #
 ###############################################################################
@@ -148,8 +116,6 @@ function change_name {
     local LINE="$2"
     local NAME="$3"
 
-    store_file "$FILE"
-
     sed -n "${LINE}p" "$FILE" | grep -q "$NAME" \
         && sed -i "${LINE}s/$NAME/${NAME:1}/g" "$FILE" \
         || sed -i "s/$NAME/${NAME:1}/g" "$FILE"
@@ -195,7 +161,10 @@ for INJECTION_NAME in "${!INJECTIONS[@]}"; do
 
     bash analysis.sh "$THIS_OUT"
 
-    load_all
+    for DIR in $(find /home/ros/catkin_ws/src/ -maxdepth 3 -type d \
+            -name '.git'); do
+        dirname "$DIR" | xargs -i git -C '{}' checkout -- '{}'
+    done
 
     mv "$OUTPUT_FILE" "$OUTPUT_FILE.old"
     jq ".fault_injection.$INJECTION_NAME |= {\
