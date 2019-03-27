@@ -958,6 +958,7 @@ class RoscppExtractor(LoggingObject):
             return queue_size
         return None
 
+import time
 
 class RospyExtractor(LoggingObject):
     queue_size_pos = {
@@ -1139,7 +1140,6 @@ class RospyExtractor(LoggingObject):
         for call in service_calls:
             self._on_client(node, call)
 
-
     def _setup_path(self):
         setup_file = os.path.join(self.package.path, 'setup.py')
         if not os.path.isfile(setup_file):
@@ -1180,7 +1180,13 @@ class RospyExtractor(LoggingObject):
                              workspace=self.workspace)
         for sf in node.source_files:
             self.log.debug("Parsing Python file %s", sf.path)
-            if parser.parse(sf.path) is None:
+
+            s = time.clock()
+            p = parser.parse(sf.path)
+            e = time.clock()
+            print('elapsed time: ' + str(e - s), sf.path)
+
+            if p is None:
                 self.log.warning("no compile commands for " + sf.path)
         node.source_tree = parser.global_scope
         # ----- queries after parsing, since global scope is reused -----------
