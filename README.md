@@ -1,5 +1,11 @@
 ![HAROS](logo.png?raw=true "HAROS Logo")
 
+:skull::skull::skull: ***This repository is archived :sob: I'm not maintaining it, as I graduated*** :skull::skull::skull:
+
+This was part of my thesis project, so I'm not actively working on this since I graduated. I'd like to do some more work on this, but I don't have time and it's very low in my priority list.
+
+---
+
 HAROS is a framework for static analysis of ROS-based code.
 It has been published in the IROS 2016 conference.
 If you want to cite HAROS in your publications, please cite the [original paper](https://doi.org/10.1109/IROS.2016.7759661).
